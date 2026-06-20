@@ -1,16 +1,18 @@
 ---
 title: Python Programming Workshops
-year: "2022"
-summary: A beginner-friendly Python curriculum — three workshops of lessons, code examples, and slides.
+year: "2021"
+summary: Materials for Python workshops I hosted for elementary school students
 tags: []
 link: /projects/pythonworkshops/home
 ---
 
-A multi-session introduction to Python I wrote and taught, covering datatypes,
-control structures, functions, and data structures — with runnable code examples
-and slides for each session.
+An introduction to programming with Python that 
+I hosted a series of workshops between 2020-2021 to introduce Python programming to McNair ES students, intended to prepare students for the American Computer Science League (ACSL) competitions.
+I designed these materials to start from the basics and teach students datatypes,
+control structures, functions, and data structures, each with runnable code examples, slides, and homework.
+These workshops were originally hosted on a Jekyll site but have been migrated here.
 
-## Browse the lessons
+## View the lesson materials
 
 [Open the workshops →](/projects/pythonworkshops/home)
 
@@ -20,5 +22,3 @@ and slides for each session.
 - **Workshop 2** — functions, lists & dictionaries
 - **Workshop 3** — code examples and slides
 
-The full site is migrated from a Jekyll site and lives under
-`/projects/pythonworkshops/`.

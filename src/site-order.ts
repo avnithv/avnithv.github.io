@@ -21,6 +21,7 @@ export const ordering = {
     'novascriptscentral',
     'gansbias',
     'thermostability',
+    'pencilballistics',
     'pythonworkshops',
   ],
 

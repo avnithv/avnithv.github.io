@@ -1,0 +1,69 @@
+---
+import Base from '../layouts/Base.astro';
+---
+<Base title="About — Avnith Vijayram" description="About Avnith Vijayram — computational biology & AI at Carnegie Mellon.">
+  <p class="eyebrow">about</p>
+  <h1>Hi, I'm Avnith</h1>
+  <div class="about">
+    <figure class="about-photo">
+      <!--
+        Drop a photo at site/public/avnith.jpg (or .png) and the image below
+        will render it. Until then, the styled placeholder shows your initials.
+      -->
+      <img src="/avnith.jpg" alt="Avnith Vijayram" onerror="this.replaceWith(Object.assign(document.createElement('div'),{className:'about-photo-placeholder',textContent:'AV'}))" />
+    </figure>
+
+    <div class="about-story prose">
+      <p>
+        [placeholder]
+      </p>
+
+    </div>
+  </div>
+</Base>
+
+<style>
+  .about {
+    display: grid;
+    grid-template-columns: 260px 1fr;
+    gap: 2.5rem;
+    align-items: start;
+    margin-top: 2rem;
+  }
+  .about-photo { margin: 0; }
+  .about-photo img,
+  .about-photo :global(.about-photo-placeholder) {
+    display: block;
+    width: 100%;
+    aspect-ratio: 4 / 5;
+    object-fit: cover;
+    border: 1px solid var(--rule);
+    border-radius: 12px;
+    background: var(--bg-2);
+  }
+  /* placeholder shown until a real photo is added */
+  .about-photo :global(.about-photo-placeholder) {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Space Grotesk', var(--sans);
+    font-weight: 700;
+    font-size: 3rem;
+    letter-spacing: -0.02em;
+    color: var(--faint);
+  }
+  .about-photo figcaption {
+    margin-top: 0.6rem;
+    font-family: var(--mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.04em;
+    color: var(--faint);
+    text-align: center;
+  }
+  .about-story { max-width: 60ch; }
+
+  @media (max-width: 640px) {
+    .about { grid-template-columns: 1fr; gap: 1.75rem; }
+    .about-photo { max-width: 220px; }
+  }
+</style>

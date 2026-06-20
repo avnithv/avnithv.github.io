@@ -1,0 +1,65 @@
+---
+import Base from '../layouts/Base.astro';
+import { inlineMd } from '../lib/markdown';
+import { getOrdered, hasBody } from '../lib/collections';
+import CredentialList from '../components/CredentialList.astro';
+
+// Order is controlled in one place: src/site-order.ts.
+const projects = await getOrdered('projects');
+
+// Honors live in src/content/honors/ — add a markdown file to add one.
+const honors = await getOrdered('honors');
+const honorItems = honors.map((h) => ({
+  ...h.data,
+  meta: h.data.year,
+  href: hasBody(h) ? `/honors/${h.slug}` : undefined,
+}));
+---
+<Base title="Projects — Avnith Vijayram">
+  <p class="eyebrow">projects</p>
+  <h1>Things I've done</h1>
+  <p class="lede">[summary]</p>
+
+  {honors.length > 0 && (
+    <p class="jump"><a href="#honors">honors &amp; awards <span aria-hidden="true">↓</span></a></p>
+  )}
+
+  <div class="project-grid">
+    {projects.map((p) => (
+      <a class="project-card" href={`/projects/${p.slug}`}>
+        {p.data.image && (
+          <img class="project-thumb" src={p.data.image} alt={`${p.data.title} cover`} loading="lazy" />
+        )}
+        <div class="project-body">
+          <div class="project-head">
+            <span class="project-title">{p.data.title}</span>
+            <span class="meta">{p.data.year}</span>
+          </div>
+          <p class="project-summary" set:html={inlineMd(p.data.summary)} />
+          {p.data.tags.length > 0 && (
+            <div class="tags">
+              {p.data.tags.map((t) => <span class="tag">{t}</span>)}
+            </div>
+          )}
+          <span class="project-link">view project →</span>
+        </div>
+      </a>
+    ))}
+  </div>
+
+  {honors.length > 0 && (
+    <>
+      <hr />
+      <p id="honors" class="eyebrow">honors &amp; awards</p>
+      <CredentialList items={honorItems} />
+    </>
+  )}
+</Base>
+
+<style>
+  .jump {
+    margin-top: 1rem;
+    font-family: var(--mono);
+    font-size: 0.82rem;
+  }
+</style>

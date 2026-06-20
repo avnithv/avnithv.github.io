@@ -1,0 +1,41 @@
+---
+import Base from '../../layouts/Base.astro';
+import { getCollection } from 'astro:content';
+import { inlineMd } from '../../lib/markdown';
+import { opensInNewTab } from '../../lib/links';
+
+export async function getStaticPaths() {
+  const projects = await getCollection('projects');
+  return projects.map((project) => ({
+    params: { slug: project.slug },
+    props: { project },
+  }));
+}
+
+const { project } = Astro.props;
+const { Content } = await project.render();
+const link = project.data.link;
+const newTab = !!link && opensInNewTab(link);
+---
+<Base title={`${project.data.title} — Avnith Vijayram`} description={project.data.summary}>
+  <p class="eyebrow">project · {project.data.year}</p>
+  <h1>{project.data.title}</h1>
+  <p class="lede" set:html={inlineMd(project.data.summary)} />
+  {project.data.link && (
+    <p style="margin-top:0.6rem">
+      {newTab ? (
+        <a href={link} target="_blank" rel="noopener">visit project ↗</a>
+      ) : (
+        <a href={link}>open project →</a>
+      )}
+    </p>
+  )}
+
+  <hr />
+
+  <article class="prose">
+    <Content />
+  </article>
+
+  <p style="margin-top:2.5rem"><a href="/projects">← all projects</a></p>
+</Base>

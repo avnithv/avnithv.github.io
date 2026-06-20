@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64">
+  <!-- Faceted metallic pineapple — matches the hero theme
+       (orange #ff7a16 body, dark-green #1f6b2e crown, silver highlights). -->
+  <title>Avnith Vijayram</title>
+
+  <!-- whole pineapple tilted slightly to the right -->
+  <g transform="rotate(10 32 32)">
+
+  <!-- crown: low-poly green blades (drawn far-to-near for depth) -->
+  <g stroke-linejoin="round">
+    <polygon points="12,18 20,27 26,26" fill="#123f1c"/>
+    <polygon points="52,18 38,26 44,27" fill="#123f1c"/>
+    <polygon points="20,8 24,27 31,25" fill="#1f6b2e"/>
+    <polygon points="44,8 33,25 40,27" fill="#2c8a3e"/>
+    <polygon points="26,5 30,26 34,25" fill="#2c8a3e"/>
+    <polygon points="38,5 34,25 38,26" fill="#1f6b2e"/>
+    <polygon points="32,2 27,26 37,26" fill="#4caf50"/>
+  </g>
+
+  <!-- body: faceted orange ellipsoid with metallic highlight/shadow facets -->
+  <g stroke-linejoin="round">
+    <polygon points="32,24 43,29 32,34" fill="#ffae5c"/>
+    <polygon points="43,29 46,40 32,34" fill="#ff7a16"/>
+    <polygon points="46,40 37,45 32,34" fill="#e8550c"/>
+    <polygon points="46,40 43,51 37,45" fill="#d14606"/>
+    <polygon points="43,51 32,59 37,45" fill="#e8550c"/>
+    <polygon points="32,59 27,45 37,45" fill="#d14606"/>
+    <polygon points="27,45 37,45 32,34" fill="#ffc887"/>
+    <polygon points="32,59 21,51 27,45" fill="#ff7a16"/>
+    <polygon points="21,51 18,40 27,45" fill="#d14606"/>
+    <polygon points="18,40 32,34 27,45" fill="#ff7a16"/>
+    <polygon points="18,40 21,29 32,34" fill="#e8550c"/>
+    <polygon points="21,29 32,24 32,34" fill="#ffae5c"/>
+  </g>
+
+  </g>
+</svg>

@@ -1,0 +1,289 @@
+---
+import Base from '../layouts/Base.astro';
+import { inlineMd } from '../lib/markdown';
+import { getFeatured, hasBody } from '../lib/collections';
+import CredentialList from '../components/CredentialList.astro';
+
+// What's featured on the home page is controlled in one place: src/site-order.ts
+// (slugs prefixed with "*"). These helpers read that ordering.
+const featuredProjects = await getFeatured('projects');
+
+const featuredHonors = await getFeatured('honors');
+const honorItems = featuredHonors.map((h) => ({
+  ...h.data,
+  meta: h.data.year,
+  href: hasBody(h) ? `/honors/${h.slug}` : undefined,
+}));
+
+const featuredPosts = (await getFeatured('blog')).filter((p) => !p.data.draft);
+
+const fmtDate = (d: Date) =>
+  d.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' });
+---
+<Base>
+  <!-- ============ METALLIC PINEAPPLE HERO ============ -->
+  <section class="hero">
+    <canvas id="pineapple" class="hero-canvas"></canvas>
+    <div class="hero-inner">
+      <div class="hero-text">
+        <h1 class="hero-name">Avnith<br />Vijayram</h1>
+        <p class="hero-role">Computational Biology &amp; AI @ Carnegie Mellon</p>
+        <nav class="hero-links" aria-label="Quick links">
+          <a href="/about">about me <span aria-hidden="true">→</span></a>
+          <a href="/projects">projects <span aria-hidden="true">→</span></a>
+          <a href="/avnith_resume.pdf">resume <span aria-hidden="true">→</span></a>
+        </nav>
+      </div>
+      <button id="rotate-btn" class="rotate-btn" type="button" aria-pressed="false" aria-label="Toggle pineapple rotation" title="Toggle rotation">
+        <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M21 12a9 9 0 1 1-2.64-6.36" />
+          <path d="M21 3v6h-6" />
+        </svg>
+      </button>
+    </div>
+  </section>
+
+  <!-- ============ FEATURED PROJECTS ============ -->
+  {featuredProjects.length > 0 && (
+    <section class="home-section">
+      <p class="eyebrow">selected work</p>
+      <div class="project-grid">
+        {featuredProjects.map((p) => (
+          <a class="project-card" href={`/projects/${p.slug}`}>
+            {p.data.image && (
+              <img class="project-thumb" src={p.data.image} alt={`${p.data.title} cover`} loading="lazy" />
+            )}
+            <div class="project-body">
+              <div class="project-head">
+                <span class="project-title">{p.data.title}</span>
+                <span class="meta">{p.data.year}</span>
+              </div>
+              <p class="project-summary" set:html={inlineMd(p.data.summary)} />
+              {p.data.tags.length > 0 && (
+                <div class="tags">
+                  {p.data.tags.map((t) => <span class="tag">{t}</span>)}
+                </div>
+              )}
+              <span class="project-link">view project →</span>
+            </div>
+          </a>
+        ))}
+      </div>
+      <p style="margin-top:1.25rem"><a href="/projects">all projects →</a></p>
+    </section>
+  )}
+
+  <!-- ============ FEATURED HONORS ============ -->
+  {featuredHonors.length > 0 && (
+    <section class="home-section">
+      <p class="eyebrow">selected honors &amp; awards</p>
+      <CredentialList items={honorItems} />
+      <p style="margin-top:1.25rem"><a href="/projects#honors">all honors →</a></p>
+    </section>
+  )}
+
+  <!-- ============ FEATURED WRITING ============ -->
+  {featuredPosts.length > 0 && (
+    <section class="home-section">
+      <p class="eyebrow">from the blog</p>
+      <div class="post-list">
+        {featuredPosts.map((post) => (
+          <a class="post-card" href={`/blog/${post.slug}`}>
+            {post.data.image && (
+              <img class="post-thumb" src={post.data.image} alt={`${post.data.title} cover`} loading="lazy" />
+            )}
+            <div class="post-body">
+              <div class="post-head">
+                <span class="post-title">{post.data.title}</span>
+                <span class="post-date">{fmtDate(post.data.date)}</span>
+              </div>
+              {post.data.description && <p class="post-desc" set:html={inlineMd(post.data.description)} />}
+              {post.data.tags.length > 0 && (
+                <div class="tags">
+                  {post.data.tags.map((t) => <span class="tag">{t}</span>)}
+                </div>
+              )}
+              <span class="post-readmore">read post →</span>
+            </div>
+          </a>
+        ))}
+      </div>
+      <p style="margin-top:1.25rem"><a href="/blog">all posts →</a></p>
+    </section>
+  )}
+
+</Base>
+
+<!--
+  ┌─────────────────────────────────────────────────────────────┐
+  │  PINEAPPLE CONTROLS — tweak these and refresh the page.      │
+  │  Every knob is documented in public/pineapple-scene.js.      │
+  └─────────────────────────────────────────────────────────────┘
+-->
+<script type="module" is:inline>
+  const CONFIG = {
+    variant: 'A',          // 'A' or 'B' — changes the rim-light / env tint
+    scale: 0.55,           // pineapple size (smaller = ↓)
+    baseX: 2.0,            // horizontal position (+ right, − left)
+    baseY: -0.6,           // vertical position (more negative = lower)
+    tilt: 0.16,            // lean: + tilts the top to the right, − to the left
+    rotationSpeed: 0.0045, // spins by default — the "rotate" button stops/starts it
+    rotationSpeedOn: 0.0045, // spin speed when the button is toggled on
+    bobAmount: 0.06,       // how far it floats up/down
+    bobSpeed: 0.0011,      // how fast it floats
+    pointerParallax: true, // subtle drift toward the cursor
+    particles: {
+      count: 90,           // number of metallic flecks
+      sizeMin: 0.025,      // smallest fleck
+      sizeRange: 0.045,    // random extra size
+      driftMin: 0.6,       // upward drift speed
+      driftRange: 1.6,     // random extra drift
+      spin: 0.004,         // individual fleck spin
+      radiusMin: 2.3,      // how close flecks orbit
+      radiusRange: 2.7,    // spread of the fleck cloud
+    },
+  };
+
+  const canvas = document.getElementById('pineapple');
+  const btn = document.getElementById('rotate-btn');
+  if (canvas) {
+    import('/pineapple-scene.js')
+      .then((mod) => mod.createPineappleHero(canvas, CONFIG))
+      .then((hero) => {
+        if (!btn) return;
+        // rotates by default — reflect that in the toggle's initial state
+        let rotating = true;
+        btn.setAttribute('aria-pressed', 'true');
+        btn.classList.add('is-on');
+        btn.addEventListener('click', () => {
+          rotating = !rotating;
+          hero.setRotationSpeed(rotating ? CONFIG.rotationSpeedOn : 0);
+          btn.setAttribute('aria-pressed', String(rotating));
+          btn.classList.toggle('is-on', rotating);
+        });
+      })
+      .catch((err) => console.error('[pineapple] failed to start', err));
+  }
+</script>
+
+<style>
+  .hero {
+    position: relative;
+    height: clamp(440px, 66vh, 560px);
+    margin: 0.5rem 0 2.5rem;
+    /* break the hero out of the content column so the pineapple has room */
+    width: 100vw;
+    left: 50%;
+    transform: translateX(-50%);
+    overflow: hidden;
+  }
+  .hero-canvas {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+  }
+  /* inner column keeps the text aligned with the rest of the page content */
+  .hero-inner {
+    position: relative;
+    z-index: 2;
+    max-width: var(--maxw);
+    height: 100%;
+    margin: 0 auto;
+    padding: 0 2rem;
+    display: flex;
+    align-items: center;
+    pointer-events: none;
+  }
+  .hero-text {
+    max-width: min(460px, 60%);
+    animation: pp-fade 1s 0.1s ease both;
+  }
+  .hero-name {
+    margin: 0;
+    /* extra line-height + padding so descenders (j, y) aren't clipped by background-clip */
+    font-family: 'Space Grotesk', var(--sans);
+    font-weight: 700;
+    letter-spacing: -0.04em;
+    line-height: 1.04;
+    padding-bottom: 0.12em;
+    font-size: clamp(44px, 7vw, 96px);
+    background: linear-gradient(165deg, #23b878 0%, #0e8c52 46%, #075834 80%, #1aa869 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+  .hero-role {
+    margin: 18px 0 0;
+    font-family: 'IBM Plex Mono', var(--mono);
+    font-size: 14px;
+    letter-spacing: 0.04em;
+    color: #0d5236;
+  }
+  .hero-links {
+    margin-top: 16px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.1rem;
+    /* re-enable clicks — .hero-inner sets pointer-events: none */
+    pointer-events: auto;
+  }
+  .hero-links a {
+    font-family: 'IBM Plex Mono', var(--mono);
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.03em;
+    color: var(--accent);
+    border-bottom: 1px solid rgba(224, 138, 12, 0.5);
+    padding-bottom: 2px;
+    transition: color 0.15s ease, border-color 0.15s ease;
+  }
+  .hero-links a:hover {
+    color: var(--accent-2);
+    border-color: var(--accent-2);
+    text-decoration: none;
+  }
+
+  /* rotate toggle — small icon button, aligned to the content column's right edge */
+  .rotate-btn {
+    position: absolute;
+    right: 2rem;
+    bottom: 18px;
+    z-index: 3;
+    pointer-events: auto;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 34px;
+    height: 34px;
+    color: #0d5236;
+    background: rgba(255, 255, 255, 0.6);
+    border: 1px solid rgba(13, 82, 54, 0.35);
+    border-radius: 50%;
+    cursor: pointer;
+    backdrop-filter: blur(4px);
+    transition: background 0.15s ease, color 0.15s ease, border-color 0.15s ease;
+  }
+  .rotate-btn:hover { border-color: rgba(13, 82, 54, 0.7); }
+  .rotate-btn.is-on {
+    background: #0e8c52;
+    border-color: #0e8c52;
+    color: #fff;
+  }
+  .rotate-btn.is-on svg { animation: pp-spin 1.6s linear infinite; }
+  @keyframes pp-spin {
+    to { transform: rotate(360deg); }
+  }
+
+  @keyframes pp-fade {
+    from { opacity: 0; transform: translateY(14px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .hero-text { animation: none; }
+  }
+
+  /* home page sections (projects / honors / blog) */
+  .home-section + .home-section { margin-top: 3rem; }
+</style>

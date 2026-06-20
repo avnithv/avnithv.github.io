@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 480 300" role="img" aria-label="Pineapple build cover">
+  <defs>
+    <linearGradient id="b1" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#0f3d2e"/>
+      <stop offset="1" stop-color="#23b878"/>
+    </linearGradient>
+  </defs>
+  <rect width="480" height="300" fill="url(#b1)"/>
+  <g fill="#e08a0c" opacity="0.92">
+    <polygon points="240,90 268,140 240,190 212,140"/>
+    <polygon points="300,120 320,160 300,200 280,160"/>
+    <polygon points="180,120 200,160 180,200 160,160"/>
+  </g>
+  <g fill="#eef3f0" opacity="0.85">
+    <circle cx="240" cy="60" r="6"/>
+  </g>
+  <text x="28" y="272" fill="#eef3f0" font-family="monospace" font-size="16" letter-spacing="2">BUILDING THE PINEAPPLE</text>
+</svg>

@@ -1,0 +1,207 @@
+# Site Cheat Sheet
+
+Personal site built with [Astro](https://astro.build), deployed to GitHub Pages
+(`avnithvijayram.com`) via `.github/workflows/deploy.yml` on push to `main`.
+
+---
+
+## Run & test locally
+
+```bash
+npm install          # once, after cloning or when deps change
+npm run dev          # dev server w/ hot reload → http://localhost:4321
+npm run build        # static production build → ./dist
+npm run preview      # serve the built ./dist exactly as it deploys
+```
+
+- **Day-to-day editing:** `npm run dev`, leave it running, edit files, the
+  browser refreshes automatically.
+- **Before pushing:** run `npm run build`. If it fails, the deploy will fail too
+  — usually a frontmatter typo (e.g. bad `date`, missing required field). Use
+  `npm run preview` to sanity-check the final output.
+
+---
+
+## Where content lives
+
+| Type            | Folder                  | URL              |
+|-----------------|-------------------------|------------------|
+| Blog posts      | `src/content/blog/`     | `/blog/<slug>`   |
+| Projects        | `src/content/projects/` | `/projects/<slug>` |
+| Honors & awards | `src/content/honors/`   | listed on `/projects`; optional detail page at `/honors/<slug>` |
+
+Each item is one Markdown file. **The filename = the URL slug**
+(`my-post.md` → `/blog/my-post`). Starter templates live in `templates/`.
+
+Schemas are enforced in `src/content/config.ts` — if a build fails on content,
+check the required fields there.
+
+---
+
+## Ordering & featuring — all in ONE place
+
+Order and "what's featured on the home page" are **not** set in the markdown
+files. They live in **`src/site-order.ts`**:
+
+```ts
+export const ordering = {
+  projects: ['*gliograde', '*neuroflex', 'proteinfold', 'seqviz', ...],
+  blog:     ['*research-notes', '*building-the-pineapple', 'hello', ...],
+  honors:   ['*putnam', 'icpclatam', '*regeneron', 'conrad', ...],
+};
+```
+
+- **Order** = top-to-bottom order in each list.
+- **Feature on the home page** = put a `*` in front of the slug.
+- **Slug** = the markdown filename without `.md`.
+- Anything not listed still appears, *after* the listed items (blog → newest
+  first; others → alphabetical). So a misspelled slug fails safe.
+
+To reorder: move a line. To (un)feature: add/remove the `*`. That's it.
+
+---
+
+## Blog posts
+
+Copy `templates/blog-post.md` into `src/content/blog/`, rename it, edit:
+
+```markdown
+---
+title: Post Title
+date: 2026-01-01          # YYYY-MM-DD (REQUIRED). Also the unlisted fallback sort
+description: One-line summary shown on the list and in metadata.
+tags: ["tag-one", "tag-two"]   # shown as chips; tag bar on /blog filters by these
+draft: true               # false to publish; drafts are hidden from the list
+# image: /blog/cover.svg  # optional cover; place file in public/blog/
+---
+
+Body in Markdown — headings, lists, links, images, code blocks.
+```
+
+Required: `title`, `date`. **To publish:** set `draft: false`.
+**To order / feature it:** add the slug to `src/site-order.ts`.
+
+---
+
+## Projects
+
+Copy `templates/project.md` into `src/content/projects/`, rename it, edit:
+
+```markdown
+---
+title: Project Name
+year: "2026"             # string, in quotes (REQUIRED)
+summary: One-line description shown on cards and at the top of the page. (REQUIRED)
+tags: ["tag-one", "tag-two"]
+# image: /projects/cover.svg   # optional cover; place file in public/projects/
+# link: https://example.com    # optional; shown as "visit project →"
+---
+
+Full write-up in Markdown (renders at /projects/<slug>).
+```
+
+Required: `title`, `year`, `summary`. `link` can also point at a file under
+`public/projects/<slug>/` (e.g. a PDF).
+**To order / feature it:** add the slug to `src/site-order.ts`.
+
+---
+
+## Honors & awards
+
+Copy `templates/honor.md` into `src/content/honors/`, rename it, edit:
+
+```markdown
+---
+title: Award Name
+org: Granting Organization   # optional
+year: "2024"                 # string, in quotes (REQUIRED)
+description: "One-line — supports **bold**, _italics_, [links](/path)."  # optional
+# link: https://example.com  # optional (see "Links" below)
+# linkText: view certificate # optional label for the link
+---
+
+(optional body — see "Detail pages & materials" below)
+```
+
+Required: `title`, `year`. **To order / feature it:** add the slug to
+`src/site-order.ts`.
+
+---
+
+## Detail pages & materials (honors)
+
+The body of an honor file is **optional**:
+
+- **Empty body** → no detail page.
+- **Non-empty body** → a page is generated at **`/honors/<slug>`**, and the list
+  shows a visible **"details →"** link (in the same slot the external link would
+  use). Override the label with `linkText:`.
+
+To attach materials (certificate image, PDF, etc.):
+
+1. Put files in **`public/honors/<slug>/`** (mirrors `public/projects/<slug>/`).
+2. Reference them from the body with a path starting `/honors/<slug>/`:
+   ```md
+   ![Certificate](/honors/example-certificate/certificate.svg)
+   [Download (PDF)](/honors/example-certificate/cert.pdf)
+   ```
+
+See the working example: `src/content/honors/example-certificate.md` +
+`public/honors/example-certificate/` → live at `/honors/example-certificate`.
+(Delete both when you no longer need the demo.)
+
+---
+
+## Links: internal vs external
+
+The `link:` field (honors) decides how it renders from the **URL form** — no
+flag needed:
+
+- `link: https://…` → **external**: shows `↗`, opens in a new tab.
+- `link: /some/page` → **internal**: shows `→`, same tab.
+- `linkText:` overrides the label (defaults: "learn more" external, "more"
+  internal).
+
+**The inline `link` only shows when the honor has no detail page.** If the honor
+has a body (→ a `/honors/<slug>` page), the list shows a "details →" link to that
+page instead and the inline `link` is hidden — put the external link inside the
+page body, so there aren't two links for the same item.
+
+Inside any `description`/`summary` you can also use inline Markdown links
+`[text](/path)` directly.
+
+---
+
+## Markdown in descriptions/summaries
+
+`description` (blog, honors) and `summary` (projects) render **inline Markdown**:
+`**bold**`, `_italics_`, `` `code` ``, `[links](/path)`. It's *inline* only —
+headings/lists/block elements don't render there (use the body for those).
+
+---
+
+## Images & files
+
+Put assets in `public/` and reference them with an absolute path **without
+`public`**:
+
+- `public/blog/cover.svg`   → `image: /blog/cover.svg`
+- `public/projects/foo.svg` → `image: /projects/foo.svg`
+- `public/honors/<slug>/cert.svg` → `/honors/<slug>/cert.svg`
+- PDFs / docs work the same way (e.g. `public/avnith_resume.pdf` → `/avnith_resume.pdf`).
+
+---
+
+## Common gotchas
+
+- `year` is a **string in quotes** (`"2024"`), `date` is an **unquoted date**
+  (`2026-01-01`). Mixing these up breaks the build.
+- Quote any frontmatter value containing a ` #`, `:`, or other YAML-special
+  char — e.g. `description: "ranked **#1** overall"` — or YAML drops the rest.
+- New blog posts default to `draft: true` — they won't appear until you flip it.
+- Forgot to add a slug to `src/site-order.ts`? The item still shows, just at the
+  end of its section and not featured.
+- The honors list shows the first 3, then a **"see more"** toggle (it's the
+  `limit` prop on `CredentialList`).
+- Deploy is automatic on push to `main`; if the site doesn't update, check the
+  **Actions** tab on GitHub for a failed `deploy.yml` run.

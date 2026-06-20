@@ -1,0 +1,45 @@
+---
+import Base from '../../layouts/Base.astro';
+import { getCollection } from 'astro:content';
+import { inlineMd } from '../../lib/markdown';
+import { hasBody } from '../../lib/collections';
+import { opensInNewTab } from '../../lib/links';
+
+// Only honors with body content get a detail page. Drop materials (a
+// certificate image, a PDF) in public/honors/<slug>/ and reference them from
+// the markdown body, e.g. ![certificate](/honors/<slug>/cert.png).
+export async function getStaticPaths() {
+  const honors = await getCollection('honors');
+  return honors.filter(hasBody).map((honor) => ({
+    params: { slug: honor.slug },
+    props: { honor },
+  }));
+}
+
+const { honor } = Astro.props;
+const { Content } = await honor.render();
+const ext = honor.data.link && opensInNewTab(honor.data.link);
+---
+<Base title={`${honor.data.title} — Avnith Vijayram`} description={honor.data.description}>
+  <p class="eyebrow">honor · {honor.data.year}</p>
+  <h1>{honor.data.title}</h1>
+  {honor.data.org && <p class="lede">{honor.data.org}</p>}
+  {honor.data.description && <p set:html={inlineMd(honor.data.description)} />}
+  {honor.data.link && (
+    <p style="margin-top:0.6rem">
+      {ext ? (
+        <a href={honor.data.link} target="_blank" rel="noopener">{honor.data.linkText ?? 'learn more'} ↗</a>
+      ) : (
+        <a href={honor.data.link}>{honor.data.linkText ?? 'more'} →</a>
+      )}
+    </p>
+  )}
+
+  <hr />
+
+  <article class="prose">
+    <Content />
+  </article>
+
+  <p style="margin-top:2.5rem"><a href="/projects#honors">← all honors</a></p>
+</Base>

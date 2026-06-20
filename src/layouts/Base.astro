@@ -1,0 +1,52 @@
+---
+import '../styles/global.css';
+const { title = 'Avnith Vijayram', description = 'Avnith Vijayram — computational biology & AI at Carnegie Mellon.' } = Astro.props;
+const path = Astro.url.pathname;
+const links = [
+  { href: '/about', label: 'about' },
+  { href: '/projects', label: 'projects' },
+  { href: '/blog', label: 'blog' },
+  { href: '/avnith_resume.pdf', label: 'resume' },
+];
+---
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content="website" />
+    <link rel="icon" href="/favicon.svg" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+  </head>
+  <body>
+    <div class="wrap">
+      <nav class="nav">
+        <a href="/" class="home">avnith vijayram</a>
+        {links.map((l) => (
+          <a href={l.href} aria-current={path === l.href ? 'page' : undefined}>{l.label}</a>
+        ))}
+      </nav>
+      <main>
+        <slot />
+      </main>
+      <footer class="footer">
+        <p class="eyebrow">links and such</p>
+        <div class="contact">
+          <a href="mailto:avijayra@andrew.cmu.edu">avijayra@andrew.cmu.edu</a> ·
+          <a href="https://github.com/avnithv">github</a> ·
+          <a href="https://linkedin.com/in/avnithv">linkedin</a> ·
+          <a href="https://codeforces.com/profile/avnithv">codeforces</a> ·
+          <a href="https://atcoder.jp/users/avnithv">atcoder</a> ·
+          <a href="http://instagram.com/avnith.v/">instagram</a>
+        </div>
+        <p class="footer-copy">© {new Date().getFullYear()} avnith vijayram</p>
+      </footer>
+    </div>
+  </body>
+</html>

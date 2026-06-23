@@ -151,6 +151,21 @@ main { padding: 2.5rem 0 1rem; }
 .prose thead th { border-bottom: 2px solid var(--muted); }
 .prose tbody tr:last-child td { border-bottom: none; }
 
+/* half-filled star — a real ★ glyph with its right half faded, so it renders
+   reliably everywhere (unlike the dedicated half-star codepoints) */
+.prose .half {
+  background: linear-gradient(90deg, var(--fg) 50%, rgba(16, 53, 40, 0.25) 50%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/* favorite rows — a soft gold-yellow wash over the whole row (a light tint of
+   the theme's amber accent). The <mark> on the name is just the hook; :has()
+   lifts the highlight up to the containing row. */
+.prose mark { background: none; color: inherit; }
+.prose tbody tr:has(mark) { background: rgba(223, 179, 46, 0.18); }
+
 @media (prefers-reduced-motion: no-preference) {
   a, .row .title { transition: color 0.15s ease; }
 }

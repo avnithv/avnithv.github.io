@@ -14,23 +14,23 @@
     <polygon points="44,8 33,25 40,27" fill="#2c8a3e"/>
     <polygon points="26,5 30,26 34,25" fill="#2c8a3e"/>
     <polygon points="38,5 34,25 38,26" fill="#1f6b2e"/>
-    <polygon points="32,2 27,26 37,26" fill="#4caf50"/>
+    <polygon points="32,2 27,26 37,26" fill="#3e9d47"/>
   </g>
 
   <!-- body: faceted orange ellipsoid with metallic highlight/shadow facets -->
   <g stroke-linejoin="round">
-    <polygon points="32,24 43,29 32,34" fill="#ffae5c"/>
+    <polygon points="32,24 43,29 32,34" fill="#ef9544"/>
     <polygon points="43,29 46,40 32,34" fill="#ff7a16"/>
     <polygon points="46,40 37,45 32,34" fill="#e8550c"/>
     <polygon points="46,40 43,51 37,45" fill="#d14606"/>
     <polygon points="43,51 32,59 37,45" fill="#e8550c"/>
     <polygon points="32,59 27,45 37,45" fill="#d14606"/>
-    <polygon points="27,45 37,45 32,34" fill="#ffc887"/>
+    <polygon points="27,45 37,45 32,34" fill="#e89a54"/>
     <polygon points="32,59 21,51 27,45" fill="#ff7a16"/>
     <polygon points="21,51 18,40 27,45" fill="#d14606"/>
     <polygon points="18,40 32,34 27,45" fill="#ff7a16"/>
     <polygon points="18,40 21,29 32,34" fill="#e8550c"/>
-    <polygon points="21,29 32,24 32,34" fill="#ffae5c"/>
+    <polygon points="21,29 32,24 32,34" fill="#ef9544"/>
   </g>
 
   </g>

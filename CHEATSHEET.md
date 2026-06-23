@@ -180,6 +180,20 @@ headings/lists/block elements don't render there (use the body for those).
 
 ---
 
+## Prose helpers (project / honor bodies)
+
+Body Markdown renders inside `.prose`, so a couple of inline-HTML helpers (styled
+in `src/styles/global.css`) are available in tables and text:
+
+- **Half star:** `<span class="half">★</span>` renders a real `★` with its right
+  half faded — use it for `.5` ratings, e.g. `★★<span class="half">★</span>` = 2.5.
+  (The dedicated half-star Unicode codepoints don't render in the site font.)
+- **Favorite row:** wrap a cell's text in `<mark>…</mark>` and the whole table
+  row gets a soft gold-yellow wash (via `tr:has(mark)`) — used to flag favorite
+  problems. The `<mark>` itself shows no marker; it's just the hook.
+
+---
+
 ## Images & files
 
 Put assets in `public/` and reference them with an absolute path **without

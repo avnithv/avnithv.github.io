@@ -3,7 +3,7 @@ title: Sir Jester
 year: "2026"
 summary: A retro mobile browser game for TartanHacks 2026's AppLovin track. 
 link: /projects/sirjester/game.html
-tags: []
+tags: ["Game development", "JavaScript", "Hackathon"]
 ---
 
 Sir Jester is a retro 2D platformer where you play as a jester running back

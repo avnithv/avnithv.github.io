@@ -1,11 +1,16 @@
 ---
 import Base from '../layouts/Base.astro';
-import { inlineMd } from '../lib/markdown';
 import { getOrdered, hasBody } from '../lib/collections';
 import CredentialList from '../components/CredentialList.astro';
+import ProjectCard from '../components/ProjectCard.astro';
 
 // Order is controlled in one place: src/site-order.ts.
 const projects = await getOrdered('projects');
+
+// Show the first handful; the rest tuck into a "see more" dropdown.
+const PROJECT_LIMIT = 6;
+const visible = projects.slice(0, PROJECT_LIMIT);
+const hidden = projects.slice(PROJECT_LIMIT);
 
 // Honors live in src/content/honors/ — add a markdown file to add one.
 const honors = await getOrdered('honors');
@@ -18,34 +23,27 @@ const honorItems = honors.map((h) => ({
 <Base title="Projects — Avnith Vijayram">
   <p class="eyebrow">projects</p>
   <h1>Things I've done</h1>
-  <p class="lede">[summary]</p>
+  <p class="lede">A mix of computational biology and ML research, plus projects I've built for competitions, community, and fun.</p>
 
   {honors.length > 0 && (
     <p class="jump"><a href="#honors">honors &amp; awards <span aria-hidden="true">↓</span></a></p>
   )}
 
   <div class="project-grid">
-    {projects.map((p) => (
-      <a class="project-card" href={`/projects/${p.slug}`}>
-        {p.data.image && (
-          <img class="project-thumb" src={p.data.image} alt={`${p.data.title} cover`} loading="lazy" />
-        )}
-        <div class="project-body">
-          <div class="project-head">
-            <span class="project-title">{p.data.title}</span>
-            <span class="meta">{p.data.year}</span>
-          </div>
-          <p class="project-summary" set:html={inlineMd(p.data.summary)} />
-          {p.data.tags.length > 0 && (
-            <div class="tags">
-              {p.data.tags.map((t) => <span class="tag">{t}</span>)}
-            </div>
-          )}
-          <span class="project-link">view project →</span>
-        </div>
-      </a>
-    ))}
+    {visible.map((p) => <ProjectCard project={p} />)}
   </div>
+
+  {hidden.length > 0 && (
+    <details class="see-more">
+      <summary class="see-more-btn">
+        <span class="see-more-open">see more ({hidden.length}) <span aria-hidden="true">↓</span></span>
+        <span class="see-more-close">see less <span aria-hidden="true">↑</span></span>
+      </summary>
+      <div class="project-grid see-more-grid">
+        {hidden.map((p) => <ProjectCard project={p} />)}
+      </div>
+    </details>
+  )}
 
   {honors.length > 0 && (
     <>
@@ -62,4 +60,22 @@ const honorItems = honors.map((h) => ({
     font-family: var(--mono);
     font-size: 0.82rem;
   }
+
+  /* "see more" toggle — native <details>, no JS required (mirrors CredentialList) */
+  .see-more-grid { margin-top: 1.25rem; }
+  .see-more-btn {
+    list-style: none;
+    cursor: pointer;
+    display: inline-block;
+    margin-top: 1.25rem;
+    font-family: var(--mono);
+    font-size: 0.78rem;
+    color: var(--accent);
+    user-select: none;
+  }
+  .see-more-btn::-webkit-details-marker { display: none; }
+  .see-more-btn:hover { color: var(--accent-2); }
+  .see-more-close { display: none; }
+  .see-more[open] .see-more-open { display: none; }
+  .see-more[open] .see-more-close { display: inline; }
 </style>

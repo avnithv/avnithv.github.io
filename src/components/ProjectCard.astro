@@ -1,0 +1,29 @@
+---
+import { inlineMd } from '../lib/markdown';
+import type { CollectionEntry } from 'astro:content';
+
+// A single project card (thumbnail, title/year, summary, tags, link). Used on
+// /projects for both the visible grid and the "see more" overflow.
+interface Props {
+  project: CollectionEntry<'projects'>;
+}
+const { project: p } = Astro.props;
+---
+<a class="project-card" href={`/projects/${p.slug}`}>
+  {p.data.image && (
+    <img class="project-thumb" src={p.data.image} alt={`${p.data.title} cover`} loading="lazy" />
+  )}
+  <div class="project-body">
+    <div class="project-head">
+      <span class="project-title">{p.data.title}</span>
+      <span class="meta">{p.data.year}</span>
+    </div>
+    <p class="project-summary" set:html={inlineMd(p.data.summary)} />
+    {p.data.tags.length > 0 && (
+      <div class="tags">
+        {p.data.tags.map((t) => <span class="tag">{t}</span>)}
+      </div>
+    )}
+    <span class="project-link">view project →</span>
+  </div>
+</a>

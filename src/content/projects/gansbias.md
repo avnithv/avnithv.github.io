@@ -3,7 +3,7 @@ title: Mitigating Medical Data Bias with GANs
 year: "2025"
 summary: Using generative models to build more representative training data across patient groups
 link: /projects/gansbias/Mitigating_Bias_Science_Fair_Report.pdf
-tags: []
+tags: ["Generative models", "Data augmentation"]
 ---
 
 ## Overview

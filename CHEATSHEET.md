@@ -104,6 +104,10 @@ Required: `title`, `year`, `summary`. `link` can also point at a file under
 `public/projects/<slug>/` (e.g. a PDF).
 **To order / feature it:** add the slug to `src/site-order.ts`.
 
+The `/projects` grid shows the first 6, then a **"see more"** toggle for the
+rest (`PROJECT_LIMIT` in `src/pages/projects.astro`). Each card is rendered by
+`src/components/ProjectCard.astro`.
+
 ---
 
 ## Honors & awards

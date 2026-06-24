@@ -3,7 +3,7 @@ title: Predicting Enzyme Thermostability with ML
 year: "2023"
 summary: Benchmarking ML models to predict the change in enzyme thermostability from a single point mutation 
 link: https://github.com/avnithv/enzyme-thermostability-project
-tags: []
+tags: ["Machine learning", "Computational biology", "Model benchmarking"]
 ---
 
 Enzymes are efficient catalysts for biological reactions and can potentially be

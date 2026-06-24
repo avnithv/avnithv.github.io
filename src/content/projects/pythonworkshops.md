@@ -2,7 +2,7 @@
 title: Python Programming Workshops
 year: "2021"
 summary: Materials for Python workshops I hosted for elementary school students
-tags: []
+tags: ["Teaching", "Curriculum design", "Python", "Outreach"]
 link: /projects/pythonworkshops/home
 ---
 

@@ -2,7 +2,7 @@
 title: Competitive Programming Problemsetting and Solving
 year: "2026"
 summary: Competing and problemwriting across Codeforces, AtCoder, USACO, and club contests
-tags: []
+tags: ["Competitive programming", "Algorithms", "Problem setting", "Teaching"]
 ---
 
 I reached Master on Codeforces and Platinum on USACO in fall 2023, and began representing my school at onsite competitions around the same time. More recently I've focused on AtCoder, which fits a busier schedule with more frequent contests and a math and observation focused style I prefer over Codeforces.
@@ -59,7 +59,7 @@ Most of these live in private Codeforces groups — join the [BioCode group ↗]
 | Bacteria Colony | BioCode 2024 | ★★★ | ✓ | ✓ | | [link ↗](https://codeforces.com/gym/105123/problem/I) |
 | <mark>Evolutionary Pathways</mark> | BioCode 2024 | ★★★<span class="half">★</span> | ✓ | ✓ | | [link ↗](https://codeforces.com/gym/105123/problem/J) |
 | Zygote Combinations | BioCode 2024 | ★★★★ | ✓ | ✓ | | [link ↗](https://codeforces.com/gym/105123/problem/K) |
-| <mark>A + B = Cookie</mark> | TJIOI 2024 | ★★★<span class="half">★</span> | ✓ | ✓ | A brutal constructive problem whose solution doesn't even feel  satisfying - probably my hardest problem in terms of time to solve. | [link ↗](https://codeforces.com/gym/523552/problem/D) |
+| <mark>A + B = Cookie</mark> | TJIOI 2024 | ★★★<span class="half">★</span> | ✓ | ✓ | A brutal constructive problem whose solution doesn't even feel satisfying - probably my hardest problem in terms of time to solve. | [link ↗](https://codeforces.com/gym/523552/problem/D) |
 | Cookie Cutting | TJIOI 2024 | ★ | ✓ | ✓ | | [link ↗](https://codeforces.com/gym/523552/problem/E) |
 | Cookie Filling | TJIOI 2024 | ★★<span class="half">★</span> | ✓ | ✓ | | [link ↗](https://codeforces.com/gym/523552/problem/F) |
 | Cookie Shuffle | TJIOI 2024 | ★★ | ✓ | ✓ | | [link ↗](https://codeforces.com/gym/523552/) |
@@ -74,7 +74,7 @@ Most of these live in private Codeforces groups — join the [BioCode group ↗]
 | <mark>Lock Combinations</mark> | TJIOI 2025 | ★★★<span class="half">★</span> | | ✓ | Linear algebra came in handy here. | [link ↗](https://codeforces.com/group/nHKRGA8qo6/contest/610741/problem/G) |
 | Cookie XOR | TJIOI 2025 | ★<span class="half">★</span> | ✓ | ✓ | | [link ↗](https://codeforces.com/group/nHKRGA8qo6/contest/610741/problem/I) |
 | <mark>Cookie Scoring</mark> | TJIOI 2025 | ★★★★ | ✓ | ✓ | Very representative of my competitive programming style. | [link ↗](https://codeforces.com/group/nHKRGA8qo6/contest/610741/problem/J) |
-| <mark>Dynamic Instability</mark> | USACO 2026 Platinum | ★★★★ | ✓ | ✓ | Inspired by my freshman bio class — as you can tell from the name. | [link ↗](https://usaco.org/index.php?page=viewproblem2&cpid=1574) |
+| <mark>Dynamic Instability</mark> | USACO 2026 Platinum | ★★★★ | ✓ | ✓ | Inspired by my freshman bio class — as you probably weren't able to tell from the name. | [link ↗](https://usaco.org/index.php?page=viewproblem2&cpid=1574) |
 | <mark>Perfect Binary Trees</mark> | USACO 2026 Open Platinum | ★★★<span class="half">★</span> | ✓ | ✓ | My best problem. Funnily enough, ¾ of my USACO problems are tree-combo problems. | [link ↗](https://usaco.org/index.php?page=viewproblem2&cpid=1604) |
 | True And False | BioCode 2026 | ★ | ✓ | | | [link ↗](https://codeforces.com/group/DGuafJD2no/contest/685148/problem/A) |
 | Operator | BioCode 2026 | ★ | ✓ | | | [link ↗](https://codeforces.com/group/DGuafJD2no/contest/685148/problem/B) |

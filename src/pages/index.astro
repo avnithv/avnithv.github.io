@@ -3,6 +3,7 @@ import Base from '../layouts/Base.astro';
 import { inlineMd } from '../lib/markdown';
 import { getFeatured, hasBody } from '../lib/collections';
 import CredentialList from '../components/CredentialList.astro';
+import ProjectCard from '../components/ProjectCard.astro';
 
 // What's featured on the home page is controlled in one place: src/site-order.ts
 // (slugs prefixed with "*"). These helpers read that ordering.
@@ -48,26 +49,7 @@ const fmtDate = (d: Date) =>
     <section class="home-section">
       <p class="eyebrow">selected work</p>
       <div class="project-grid">
-        {featuredProjects.map((p) => (
-          <a class="project-card" href={`/projects/${p.slug}`}>
-            {p.data.image && (
-              <img class="project-thumb" src={p.data.image} alt={`${p.data.title} cover`} loading="lazy" />
-            )}
-            <div class="project-body">
-              <div class="project-head">
-                <span class="project-title">{p.data.title}</span>
-                <span class="meta">{p.data.year}</span>
-              </div>
-              <p class="project-summary" set:html={inlineMd(p.data.summary)} />
-              {p.data.tags.length > 0 && (
-                <div class="tags">
-                  {p.data.tags.map((t) => <span class="tag">{t}</span>)}
-                </div>
-              )}
-              <span class="project-link">view project →</span>
-            </div>
-          </a>
-        ))}
+        {featuredProjects.map((p) => <ProjectCard project={p} />)}
       </div>
       <p style="margin-top:1.25rem"><a href="/projects">all projects →</a></p>
     </section>

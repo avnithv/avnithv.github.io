@@ -3,7 +3,7 @@ title: "An Analysis of the Ballistics of Graphite and Mechanical Pencils"
 year: "2022"
 summary: "A scientifically rigorous statistics study answering an important question: which pencil type flies farther when launched?"
 link: /projects/pencilballistics/report.pdf
-tags: []
+tags: ["Statistics", "Experimental design", "Data analysis"]
 ---
 
 Pencils are useful for writing, erasing, and drawing. They are

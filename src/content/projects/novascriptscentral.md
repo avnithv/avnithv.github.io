@@ -3,7 +3,7 @@ title: NOVA ScriptsCentral
 year: "2025"
 summary: Turning nearly two decades of medication records into dashboards
 link: https://public.tableau.com/app/profile/avnith.v/viz/NOVAScripts/Dashboard1
-tags: []
+tags: ["Data visualization", "Tableau", "Data analysis"]
 ---
 
 ## Background

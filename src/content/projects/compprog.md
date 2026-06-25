@@ -40,26 +40,26 @@ I started out on Codeforces before shifting most of my focus to USACO and AtCode
 ## Problems I've Written
 
 
-Most of these live in private Codeforces groups — join the [BioCode group ↗](https://codeforces.com/group/DGuafJD2no) and the [TJIOI group ↗](https://codeforces.com/group/nHKRGA8qo6) to open the problem links below. Difficulty is on a 5-star scale and the highlighted problems are my personal favorites.
+Most of these live in private Codeforces groups — join the [BioCode group ↗](https://codeforces.com/group/DGuafJD2no) and the [TJIOI 2024 ↗](https://codeforces.com/contests/523552) and [TJIOI 2025 ↗](https://codeforces.com/group/nHKRGA8qo6) groups to open the problem links below. Difficulty is on a 5-star scale and the highlighted problems are my personal favorites.
 
 | Problem | Contest | Difficulty | Author | Preparer | Notes | Link |
 | --- | --- | --- | :-: | :-: | --- | --- |
 | Photosynthesis | BioCode 2023 | ★ | ✓ | ✓ | | [link ↗](https://codeforces.com/group/DGuafJD2no/contest/432221/problem/B) |
 | DNA Transcription | BioCode 2023 | ★ | ✓ | ✓ | | [link ↗](https://codeforces.com/group/DGuafJD2no/contest/432221/problem/D) |
-| RNA Translation | BioCode 2023 | ★★ | ✓ | ✓ | | [link ↗](https://codeforces.com/group/DGuafJD2no/contest/432221/problem/E1) |
+| RNA Translation | BioCode 2023 | ★★ | ✓ | ✓ | | [link ↗](https://codeforces.com/group/DGuafJD2no/contest/432221/problem/E2) |
 | Bacteria | BioCode 2023 | ★★ | ✓ | ✓ | | [link ↗](https://codeforces.com/group/DGuafJD2no/contest/432221/problem/F) |
 | Phylogenetic Tree | BioCode 2023 | ★★★ | ✓ | ✓ | | [link ↗](https://codeforces.com/group/DGuafJD2no/contest/432221/problem/I) |
 | <mark>Bessie's Interview</mark> | USACO 2024 Open Silver | ★★★ | ✓ | ✓ | My first USACO problem — I came up with it while waiting in line. | [link ↗](https://usaco.org/index.php?page=viewproblem2&cpid=1422) |
 | Neural Network | BioCode 2024 | ★ | ✓ | ✓ | Probably my "ideal" easy problem. | [link ↗](https://codeforces.com/gym/105123/problem/B) |
 | Flipped DNA | BioCode 2024 | ★ | ✓ | ✓ | | [link ↗](https://codeforces.com/gym/105123/problem/C) |
-| Predator or Prey | BioCode 2024 | ★★ | ✓ | ✓ | | [link ↗](https://codeforces.com/gym/105123/problem/D) |
-| <mark>Powerhouse of the Cell?</mark> | BioCode 2024 | ★★<span class="half">★</span> | ✓ | ✓ | Cute and simple. | [link ↗](https://codeforces.com/gym/105123/problem/F) |
-| Wildfires | BioCode 2024 | ★★★ | ✓ | ✓ | | [link ↗](https://codeforces.com/gym/105123/problem/G) |
-| <mark>Cut and Splice</mark> | BioCode 2024 | ★★<span class="half">★</span> | ✓ | ✓ | Slightly contrived, but I like how it looks messy at first and simplifies nicely. | [link ↗](https://codeforces.com/gym/105123/problem/H) |
-| Bacteria Colony | BioCode 2024 | ★★★ | ✓ | ✓ | | [link ↗](https://codeforces.com/gym/105123/problem/I) |
-| <mark>Evolutionary Pathways</mark> | BioCode 2024 | ★★★<span class="half">★</span> | ✓ | ✓ | | [link ↗](https://codeforces.com/gym/105123/problem/J) |
-| Zygote Combinations | BioCode 2024 | ★★★★ | ✓ | ✓ | | [link ↗](https://codeforces.com/gym/105123/problem/K) |
-| <mark>A + B = Cookie</mark> | TJIOI 2024 | ★★★<span class="half">★</span> | ✓ | ✓ | A brutal constructive problem whose solution doesn't even feel satisfying - probably my hardest problem in terms of time to solve. | [link ↗](https://codeforces.com/gym/523552/problem/D) |
+| Predator or Prey | BioCode 2024 | ★★ | ✓ | ✓ | | [link ↗](https://codeforces.com/gym/105123/problem/D2) |
+| <mark>Powerhouse of the Cell?</mark> | BioCode 2024 | ★★<span class="half">★</span> | ✓ | ✓ | Cute and simple. | [link ↗](https://codeforces.com/gym/105123/problem/E) |
+| Wildfires | BioCode 2024 | ★★★ | ✓ | ✓ | | [link ↗](https://codeforces.com/gym/105123/problem/F) |
+| <mark>Cut and Splice</mark> | BioCode 2024 | ★★<span class="half">★</span> | ✓ | ✓ | Slightly contrived, but I like how it looks messy at first and simplifies nicely. | [link ↗](https://codeforces.com/gym/105123/problem/G) |
+| Bacteria Colony | BioCode 2024 | ★★★ | ✓ | ✓ | | [link ↗](https://codeforces.com/gym/105123/problem/H) |
+| <mark>Evolutionary Pathways</mark> | BioCode 2024 | ★★★<span class="half">★</span> | ✓ | ✓ | | [link ↗](https://codeforces.com/gym/105123/problem/I) |
+| Zygote Combinations | BioCode 2024 | ★★★★ | ✓ | ✓ | | [link ↗](https://codeforces.com/group/DGuafJD2no/contest/519381/problem/K) |
+| <mark>A + B = Cookie</mark> | TJIOI 2024 | ★★★<span class="half">★</span> | ✓ | ✓ | A cancer constructive problem, the solution isn't even satisfying. Probably my hardest problem in terms of time to solve. | [link ↗](https://codeforces.com/gym/523552/problem/D) |
 | Cookie Cutting | TJIOI 2024 | ★ | ✓ | ✓ | | [link ↗](https://codeforces.com/gym/523552/problem/E) |
 | Cookie Filling | TJIOI 2024 | ★★<span class="half">★</span> | ✓ | ✓ | | [link ↗](https://codeforces.com/gym/523552/problem/F) |
 | Cookie Shuffle | TJIOI 2024 | ★★ | ✓ | ✓ | | [link ↗](https://codeforces.com/gym/523552/) |

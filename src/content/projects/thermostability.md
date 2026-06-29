@@ -17,5 +17,5 @@ Kaggle dataset. XGBoost gave the best performance, with an R² of 0.593. Built D
 ## Materials
 
 - [Research paper (PDF)](/projects/thermostability/research-paper.pdf) - methods and results write-up.
-- [Notebook (.ipynb)](/projects/thermostability/enzyme-thermostability.ipynb) - full data pipeline and model training.
+- [Notebook (.ipynb) ↗](https://github.com/avnithv/enzyme-thermostability-project/blob/master/EnzymeProject.ipynb) - full data pipeline and model training.
 - [Source on GitHub ↗](https://github.com/avnithv/enzyme-thermostability-project)

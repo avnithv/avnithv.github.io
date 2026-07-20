@@ -81,6 +81,21 @@ Body in Markdown — headings, lists, links, images, code blocks.
 Required: `title`, `date`. **To publish:** set `draft: false`.
 **To order / feature it:** add the slug to `src/site-order.ts`.
 
+### The tag filter bar on /blog
+
+Which tags get a filter button — and their left-to-right order — is controlled
+by **`blogTags`** in `src/site-order.ts` (same file as ordering):
+
+```ts
+export const blogTags: string[] = ['first', 'post'];
+```
+
+- A tag **not** listed still renders as a chip on the post; it just isn't
+  filterable. This is how you keep one-off tags out of the bar.
+- A listed tag that no published post uses is skipped automatically, so a typo
+  or a stale tag fails safe (no dead button).
+- Matching is case-insensitive. Empty list → the whole bar is hidden.
+
 ---
 
 ## Projects
@@ -217,6 +232,8 @@ Put assets in `public/` and reference them with an absolute path **without
 - Quote any frontmatter value containing a ` #`, `:`, or other YAML-special
   char — e.g. `description: "ranked **#1** overall"` — or YAML drops the rest.
 - New blog posts default to `draft: true` — they won't appear until you flip it.
+- Added a blog tag but no filter button appeared? Add it to `blogTags` in
+  `src/site-order.ts` — the bar is an explicit list, not derived from posts.
 - Forgot to add a slug to `src/site-order.ts`? The item still shows, just at the
   end of its section and not featured.
 - The honors list shows the first 3, then a **"see more"** toggle (it's the

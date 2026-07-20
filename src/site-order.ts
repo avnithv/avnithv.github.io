@@ -26,6 +26,7 @@ export const ordering = {
   ],
 
   blog: [
+    '*first',
   ],
 
   honors: [
@@ -41,3 +42,16 @@ export const ordering = {
 } satisfies Record<string, string[]>;
 
 export type OrderedCollection = keyof typeof ordering;
+
+// ─────────────────────────────────────────────────────────────────────────
+//  Which tags show up in the filter bar on /blog, left-to-right.
+//
+//  • Only tags listed here become filter buttons — leave one out and it still
+//    shows as a chip on the post, it just isn't filterable.
+//  • A listed tag that no published post uses is skipped automatically, so a
+//    typo or a stale tag fails safe (no dead button).
+//  • Matching is case-insensitive.
+//  • Empty list → the whole filter bar is hidden.
+// ─────────────────────────────────────────────────────────────────────────
+export const blogTags: string[] = [
+];

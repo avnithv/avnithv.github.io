@@ -296,7 +296,7 @@ main { padding: 2.5rem 0 1rem; }
   display: flex;
   flex-direction: column;
   flex: 1;
-  padding: 1.1rem 1.25rem;
+  padding: 0.95rem 1.15rem;
 }
 .post-head {
   display: flex;
@@ -306,12 +306,23 @@ main { padding: 2.5rem 0 1rem; }
 }
 .post-title { font-weight: 600; font-size: 1.05rem; letter-spacing: -0.01em; }
 .post-date { color: var(--faint); font-family: var(--mono); font-size: 0.78rem; white-space: nowrap; }
-.post-desc { margin: 0.4rem 0 0; color: var(--muted); font-size: 0.94rem; line-height: 1.55; }
+.post-desc { margin: 0; color: var(--muted); font-size: 0.94rem; line-height: 1.55; }
+/* Second (and last) line of the card: description left, link right. Cards omit
+   tag chips — those live on the post itself — so this keeps the card 2 lines.
+   baseline aligns the link to the description's first line when it wraps. */
+.post-foot {
+  display: flex;
+  align-items: baseline;
+  gap: 1rem;
+  margin-top: 0.35rem;
+}
 .post-readmore {
-  margin-top: 0.9rem;
+  margin-left: auto;
+  flex: none;
   font-family: var(--mono);
   font-size: 0.78rem;
   color: var(--accent);
+  white-space: nowrap;
 }
 @media (max-width: 540px) {
   .post-card { flex-direction: column; }

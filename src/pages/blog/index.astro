@@ -2,28 +2,22 @@
 import Base from '../../layouts/Base.astro';
 import { inlineMd } from '../../lib/markdown';
 import { getOrdered } from '../../lib/collections';
+import { blogTags } from '../../site-order';
 
 // Order is controlled in one place: src/site-order.ts (unlisted posts fall
 // back to newest-first).
 const posts = (await getOrdered('blog')).filter((p) => !p.data.draft);
 
 const fmt = (d: Date) =>
-  d.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' });
+  // timeZone: UTC — frontmatter dates parse as UTC midnight, so formatting in
+  // the build machine's local zone would render the previous day.
+  d.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric', timeZone: 'UTC' });
 
-// Filter tags are derived from the tags on existing posts, sorted by how
-// often they appear (most common first), then alphabetically to break ties.
-const tagCounts = new Map<string, { label: string; count: number }>();
-for (const post of posts) {
-  for (const tag of post.data.tags) {
-    const key = tag.toLowerCase();
-    const entry = tagCounts.get(key);
-    if (entry) entry.count++;
-    else tagCounts.set(key, { label: tag, count: 1 });
-  }
-}
-const FILTER_TAGS = [...tagCounts.values()]
-  .sort((a, b) => b.count - a.count || a.label.localeCompare(b.label))
-  .map((t) => t.label);
+// Which tags get a filter button, and in what order, is controlled in one
+// place: blogTags in src/site-order.ts. A listed tag that no published post
+// uses is dropped here so it can't render a dead button.
+const inUse = new Set(posts.flatMap((p) => p.data.tags.map((t) => t.toLowerCase())));
+const FILTER_TAGS = blogTags.filter((t) => inUse.has(t.toLowerCase()));
 
 const tagKey = (tags: string[]) => `|${tags.map((t) => t.toLowerCase()).join('|')}|`;
 ---
@@ -32,12 +26,14 @@ const tagKey = (tags: string[]) => `|${tags.map((t) => t.toLowerCase()).join('|'
   <h1>Things I've written</h1>
   <p class="lede">mostly random stuff I've been working on or found interesting</p>
 
-  <div class="tag-filter" role="group" aria-label="Filter posts by tag">
-    <button class="filter-btn is-active" type="button" data-tag="" aria-pressed="true">all</button>
-    {FILTER_TAGS.map((t) => (
-      <button class="filter-btn" type="button" data-tag={t.toLowerCase()} aria-pressed="false">{t}</button>
-    ))}
-  </div>
+  {FILTER_TAGS.length > 0 && (
+    <div class="tag-filter" role="group" aria-label="Filter posts by tag">
+      <button class="filter-btn is-active" type="button" data-tag="" aria-pressed="true">all</button>
+      {FILTER_TAGS.map((t) => (
+        <button class="filter-btn" type="button" data-tag={t.toLowerCase()} aria-pressed="false">{t}</button>
+      ))}
+    </div>
+  )}
 
   <div class="post-list">
     {posts.length === 0 && <p class="lede">No posts yet — coming soon.</p>}
@@ -51,13 +47,13 @@ const tagKey = (tags: string[]) => `|${tags.map((t) => t.toLowerCase()).join('|'
             <span class="post-title">{post.data.title}</span>
             <span class="post-date">{fmt(post.data.date)}</span>
           </div>
-          {post.data.description && <p class="post-desc" set:html={inlineMd(post.data.description)} />}
-          {post.data.tags.length > 0 && (
-            <div class="tags">
-              {post.data.tags.map((t) => <span class="tag">{t}</span>)}
-            </div>
-          )}
-          <span class="post-readmore">read post →</span>
+          {/* Description and link share the second line so the card is two
+              lines tall. Tags are omitted here — they render on the post
+              itself, and the filter reads data-tags on the card. */}
+          <div class="post-foot">
+            {post.data.description && <p class="post-desc" set:html={inlineMd(post.data.description)} />}
+            <span class="post-readmore">read post →</span>
+          </div>
         </div>
       </a>
     ))}

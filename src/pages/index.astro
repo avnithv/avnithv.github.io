@@ -125,6 +125,16 @@ const fmtDate = (d: Date) =>
     },
   };
 
+  // On small screens keep the pineapple off to the side like desktop, but the
+  // portrait frustum is much narrower — so shrink it and pull baseX in enough
+  // that it stays fully in frame on the right without crowding the text.
+  // Desktop is untouched.
+  if (window.matchMedia('(max-width: 768px)').matches) {
+    CONFIG.baseX = 0.85;
+    CONFIG.baseY = -0.1;
+    CONFIG.scale = 0.32;
+  }
+
   const canvas = document.getElementById('pineapple');
   const btn = document.getElementById('rotate-btn');
   if (canvas) {
@@ -267,4 +277,23 @@ const fmtDate = (d: Date) =>
 
   /* home page sections (projects / honors / blog) */
   .home-section + .home-section { margin-top: 3rem; }
+
+  /* ---- mobile hero -------------------------------------------------------
+     Keep the desktop overlay layout (text left, pineapple to the side) but
+     tuned for a phone: a shorter hero, a smaller name that can't clip, and a
+     narrower text column so it clears the (shrunk) pineapple on the right.
+     The pineapple's size/position is set in the hero script. Desktop is
+     untouched. */
+  @media (max-width: 768px) {
+    .hero {
+      height: clamp(360px, 60vh, 460px);
+      margin: 0.25rem 0 2.25rem;
+    }
+    .hero-inner { padding: 0 1.25rem; }
+    .hero-text { max-width: 54%; }
+    .hero-name { font-size: clamp(38px, 10vw, 54px); }
+    .hero-role { font-size: 13px; }
+    /* the rotate toggle is a hover affordance; drop it on touch layouts */
+    .rotate-btn { display: none; }
+  }
 </style>

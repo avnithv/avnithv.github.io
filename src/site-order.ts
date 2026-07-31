@@ -26,7 +26,8 @@ export const ordering = {
   ],
 
   blog: [
-    '*first',
+    '*ycsus',
+    'first',
   ],
 
   honors: [

@@ -328,3 +328,28 @@ main { padding: 2.5rem 0 1rem; }
   .post-card { flex-direction: column; }
   .post-thumb { width: 100%; aspect-ratio: 16 / 9; }
 }
+
+/* ---- small screens / mobile ------------------------------------------------
+   The base layout centers content in a 78vw column, which leaves large, empty
+   side gutters on a phone. On small screens let content use the full viewport
+   width with a comfortable inset, and let the nav wrap instead of overflowing.
+   Desktop (> 768px) is unchanged. */
+@media (max-width: 768px) {
+  :root { --maxw: 100%; }
+  .wrap { padding: 0 1.25rem; }
+
+  /* nav: the name takes its own line, the links wrap onto the next */
+  .nav {
+    flex-wrap: wrap;
+    gap: 0.55rem 1.15rem;
+    padding-top: 1.5rem;
+  }
+  .nav .home {
+    flex-basis: 100%;
+    margin-right: 0;
+    white-space: nowrap;
+  }
+
+  main { padding: 2rem 0 1rem; }
+  h1 { font-size: 1.45rem; }
+}

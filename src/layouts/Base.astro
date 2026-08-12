@@ -22,7 +22,12 @@ const links = [
     <link rel="icon" href="/favicon.svg" />
     <script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "e2c049c5e80544198cc807b096d82f9c"}'></script>
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Source+Sans+3:wght@400;600;700&family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+    <script is:inline>
+      // one-time cleanup: drop any lingering pick from the removed theme
+      // preview switcher so it can't override the finalized theme
+      try { localStorage.removeItem('theme-preview'); } catch (_) {}
+    </script>
   </head>
   <body>
     <div class="wrap">

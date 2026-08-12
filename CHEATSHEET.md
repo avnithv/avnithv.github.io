@@ -81,6 +81,15 @@ Body in Markdown — headings, lists, links, images, code blocks.
 Required: `title`, `date`. **To publish:** set `draft: false`.
 **To order / feature it:** add the slug to `src/site-order.ts`.
 
+### Highlighting important posts — the `featured` tag
+
+Add `"featured"` to a post's `tags` and its card on `/blog` gets an amber ★
+before the title. `featured` is also in `blogTags`, so it has a filter button.
+(This is separate from the `*` prefix in `src/site-order.ts`, which controls
+what appears on the home page.) The star style lives in
+`src/styles/global.css` (`.featured-star`); the card also carries an
+`.is-featured` class as a hook if a stronger treatment is wanted later.
+
 ### The tag filter bar on /blog
 
 Which tags get a filter button — and their left-to-right order — is controlled
@@ -222,6 +231,23 @@ Put assets in `public/` and reference them with an absolute path **without
 - `public/projects/foo.svg` → `image: /projects/foo.svg`
 - `public/honors/<slug>/cert.svg` → `/honors/<slug>/cert.svg`
 - PDFs / docs work the same way (e.g. `public/avnith_resume.pdf` → `/avnith_resume.pdf`).
+- Standalone HTML pages (games, tools) work the same way too: put the file in
+  `public/<section>/<slug>/` and it's served as its own page alongside the
+  generated one (e.g. `public/projects/sirjester/game.html`,
+  `public/blog/sorting/manual-sort.html`). To embed one inside a post, use an
+  inline `<iframe src="/blog/<slug>/file.html">` in the Markdown body — see
+  `src/content/blog/sorting.md`.
+
+---
+
+## Site theme (font & colors)
+
+The theme lives in the `:root` block at the top of `src/styles/global.css` —
+body font is `--sans` (Source Sans 3, loaded via the Google Fonts `<link>` in
+`src/layouts/Base.astro`), background is `--bg` ("snow") with `--bg-2` for
+raised panels and `--rule` for hairlines. To try a different font, add it to
+the fonts `<link>` and swap `--sans`; to change the background, adjust those
+three variables together.
 
 ---
 

@@ -20,6 +20,9 @@ const inUse = new Set(posts.flatMap((p) => p.data.tags.map((t) => t.toLowerCase(
 const FILTER_TAGS = blogTags.filter((t) => inUse.has(t.toLowerCase()));
 
 const tagKey = (tags: string[]) => `|${tags.map((t) => t.toLowerCase()).join('|')}|`;
+
+// Posts tagged "featured" get a gold wash + star in the list so they stand out.
+const isFeatured = (tags: string[]) => tags.some((t) => t.toLowerCase() === 'featured');
 ---
 <Base title="Blog — Avnith Vijayram">
   <p class="eyebrow">blog</p>
@@ -38,13 +41,15 @@ const tagKey = (tags: string[]) => `|${tags.map((t) => t.toLowerCase()).join('|'
   <div class="post-list">
     {posts.length === 0 && <p class="lede">No posts yet — coming soon.</p>}
     {posts.map((post) => (
-      <a class="post-card" href={`/blog/${post.slug}`} data-tags={tagKey(post.data.tags)}>
+      <a class:list={['post-card', { 'is-featured': isFeatured(post.data.tags) }]} href={`/blog/${post.slug}`} data-tags={tagKey(post.data.tags)}>
         {post.data.image && (
           <img class="post-thumb" src={post.data.image} alt={`${post.data.title} cover`} loading="lazy" />
         )}
         <div class="post-body">
           <div class="post-head">
-            <span class="post-title">{post.data.title}</span>
+            <span class="post-title">
+              {isFeatured(post.data.tags) && <span class="featured-star" aria-label="featured post">★ </span>}{post.data.title}
+            </span>
             <span class="post-date">{fmt(post.data.date)}</span>
           </div>
           {/* Description and link share the second line so the card is two

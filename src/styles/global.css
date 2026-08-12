@@ -1,16 +1,16 @@
-/* metallic pineapple — dark green base, amber/gold accents, silver text */
+/* metallic pineapple — snow-white base, emerald ink, amber/gold accents */
 :root {
-  --bg: #e8ece9;          /* light brushed silver */
-  --bg-2: #dce2de;        /* raised panel silver */
+  --bg: #f8faf8;          /* snow — near-white with a green-gray hint */
+  --bg-2: #edf1ee;        /* raised panel */
   --fg: #103528;          /* deep emerald ink */
   --muted: #4c6557;       /* muted emerald-gray */
   --faint: #7c9285;       /* faint emerald-gray */
-  --rule: #c8d1cc;        /* hairline silver */
+  --rule: #dce3de;        /* hairline */
   --accent: #e08a0c;      /* pineapple amber */
   --accent-2: #d99a1f;    /* highlight gold */
   --emerald: #0f3d2e;     /* deep emerald accent */
   --mono: ui-monospace, "SF Mono", "JetBrains Mono", "Cascadia Code", Menlo, Consolas, monospace;
-  --sans: -apple-system, BlinkMacSystemFont, "Inter", "Segoe UI", Helvetica, Arial, sans-serif;
+  --sans: "Source Sans 3", -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
   --maxw: min(1000px, 78vw);
 }
 
@@ -328,6 +328,11 @@ main { padding: 2.5rem 0 1rem; }
   .post-card { flex-direction: column; }
   .post-thumb { width: 100%; aspect-ratio: 16 / 9; }
 }
+
+/* featured posts (tag: "featured") — an amber ★ before the title marks
+   important posts in the list. (.is-featured stays on the card as a hook in
+   case a stronger treatment is wanted later.) */
+.featured-star { color: var(--accent); }
 
 /* ---- small screens / mobile ------------------------------------------------
    The base layout centers content in a 78vw column, which leaves large, empty

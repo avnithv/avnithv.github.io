@@ -2,7 +2,7 @@
 title: YC Startup School
 date: 2026-07-30
 description: my main takeaways from the past weekend 
-tags: ["yc", "startup"]
+tags: ["featured", "yc", "startup"]
 draft: false
 ---
 

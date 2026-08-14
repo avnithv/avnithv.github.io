@@ -1,8 +1,8 @@
 // ─────────────────────────────────────────────────────────────────────────
 //  ONE PLACE to control ordering + what's featured on the home page.
 //
-//  • Order   — items appear top-to-bottom in the order listed here.
-//  • Feature — put a "*" in front of a slug to feature it on the home page.
+//  • Order   - items appear top-to-bottom in the order listed here.
+//  • Feature - put a "*" in front of a slug to feature it on the home page.
 //  • The slug is the markdown filename without ".md"
 //    (e.g. src/content/honors/putnam.md  →  "putnam").
 //  • Anything NOT listed here still shows up, after the listed items
@@ -26,6 +26,7 @@ export const ordering = {
   ],
 
   blog: [
+    'sorting',
     '*ycsus',
     'first',
   ],
@@ -47,7 +48,7 @@ export type OrderedCollection = keyof typeof ordering;
 // ─────────────────────────────────────────────────────────────────────────
 //  Which tags show up in the filter bar on /blog, left-to-right.
 //
-//  • Only tags listed here become filter buttons — leave one out and it still
+//  • Only tags listed here become filter buttons - leave one out and it still
 //    shows as a chip on the post, it just isn't filterable.
 //  • A listed tag that no published post uses is skipped automatically, so a
 //    typo or a stale tag fails safe (no dead button).
@@ -55,4 +56,5 @@ export type OrderedCollection = keyof typeof ordering;
 //  • Empty list → the whole filter bar is hidden.
 // ─────────────────────────────────────────────────────────────────────────
 export const blogTags: string[] = [
+  'featured',
 ];

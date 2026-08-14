@@ -48,7 +48,7 @@ We reached out to neuropathologists from many clinics and research institutions,
  
 ## Datasets and links
  
-- [gliograde.org ↗](https://gliograde.org) — the project site
-- [Demo video ↗](https://www.youtube.com/watch?v=rxM5NN8b4VM) — walkthrough of the tool
-- [UCSF-PDGM ↗](https://www.cancerimagingarchive.net/collection/ucsf-pdgm/) — adult diffuse glioma MRI dataset (training)
-- [Erasmus Glioma Database ↗](https://doi.org/10.1016/j.dib.2021.107191) — glioma MRI dataset (cross-dataset testing)
+- [gliograde.org ↗](https://gliograde.org) - the project site
+- [Demo video ↗](https://www.youtube.com/watch?v=rxM5NN8b4VM) - walkthrough of the tool
+- [UCSF-PDGM ↗](https://www.cancerimagingarchive.net/collection/ucsf-pdgm/) - adult diffuse glioma MRI dataset (training)
+- [Erasmus Glioma Database ↗](https://doi.org/10.1016/j.dib.2021.107191) - glioma MRI dataset (cross-dataset testing)

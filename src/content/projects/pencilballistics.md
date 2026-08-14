@@ -17,7 +17,7 @@ matter scientifically: do graphite pencils or mechanical pencils fly farther?
 I ran a proper randomized, controlled experiment for my freshman year Research Statistics
 course:
 
-- Independent variable: 60 pencils — 30 graphite, 30 mechanical — launched in a
+- Independent variable: 60 pencils (30 graphite, 30 mechanical) launched in a
   randomized order generated in R.
 - Response variable: distance flown, in inches, from launch point to pencil tip.
 - Method: a purpose-built Pencil-Launching Apparatus (books, a roller, and a tape

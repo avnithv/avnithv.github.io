@@ -1,0 +1,511 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hand Sort</title>
+<style>
+  body{
+    margin:0;font-family:system-ui,sans-serif;line-height:1.5;
+    color:#222;background:#fafafa;padding:2rem 1rem;
+  }
+  .wrap{max-width:520px;margin:0 auto}
+  h1{font-size:1.5rem;margin:0 0 1.5rem;font-weight:600}
+  textarea,select{
+    width:100%;font:inherit;padding:.6rem;border:1px solid #ccc;
+    border-radius:6px;background:#fff;box-sizing:border-box;
+  }
+  textarea{min-height:130px;resize:vertical}
+  select{margin:.8rem 0}
+  label{font-size:.85rem;color:#666}
+  button{
+    font:inherit;cursor:pointer;padding:.6rem 1.2rem;border:1px solid #222;
+    border-radius:6px;background:#222;color:#fff;
+  }
+  button.plain{background:#fff;color:#222}
+  .rowline{display:flex;align-items:center;gap:.5rem;flex-wrap:wrap;margin-bottom:.8rem}
+  input[type=range]{flex:1;min-width:160px;accent-color:#222}
+  #nlabel{font-variant-numeric:tabular-nums;min-width:3.2rem;text-align:right;font-weight:600}
+  #compare{margin-top:1.5rem;text-align:center}
+  #compare p{color:#888;font-size:.9rem;margin:0 0 1rem}
+  .choices{display:flex;align-items:stretch;gap:.6rem;margin:.5rem 0}
+  .choice{
+    flex:1;display:flex;align-items:center;justify-content:center;text-align:center;
+    font-size:1.1rem;padding:1.4rem 1rem;min-height:3.5rem;
+    border:1px solid #ccc;border-radius:6px;background:#fff;color:#222;
+    word-break:break-word;
+  }
+  .choice:hover{border-color:#222}
+  .vs{display:flex;align-items:center;color:#aaa;font-style:italic;font-size:.9rem}
+  .hint{font-size:.78rem;color:#aaa;text-align:center;margin-bottom:.5rem}
+  #count{color:#888;font-size:.85rem;margin-top:1rem}
+  #estimate{font-size:.8rem;color:#888;margin:-.4rem 0 1rem}
+  #notice{
+    background:#fff4e0;border:1px solid #e0b060;border-radius:6px;
+    padding:.8rem;margin-bottom:1rem;font-size:.9rem;color:#7a5000;text-align:left;
+  }
+  ol{background:#fff;border:1px solid #ccc;border-radius:6px;padding:1rem 1rem 1rem 2.5rem;margin:0 0 1rem;max-height:60vh;overflow:auto}
+  ol li{padding:.25rem 0}
+  #itemcount{font-size:.8rem;color:#888;margin:.3rem 0 .2rem}
+  #progressWrap{margin-top:1.1rem}
+  #progressLabel{font-size:.78rem;color:#888;margin-bottom:.3rem}
+  .pbar{height:7px;background:#eee;border-radius:4px;overflow:hidden}
+  .pbar>i{display:block;height:100%;width:0;background:#3a5a8a;transition:width .25s ease}
+  .hidden{display:none}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>Hand Sort</h1>
+
+  <div id="setup">
+    <textarea id="items" placeholder="One item per line"></textarea>
+    <div id="itemcount">0 items</div>
+
+    <div class="rowline" style="margin-top:.8rem">
+      <label for="category">Random fill from:</label>
+      <select id="category" style="width:auto;margin:0;flex:1"></select>
+    </div>
+    <div class="rowline">
+      <input type="range" id="slider" min="2" max="1000" value="8">
+      <span id="nlabel">8</span>
+      <button class="plain" id="random">Fill</button>
+    </div>
+
+    <select id="algo">
+      <option value="merge_insertion">Merge-insertion</option>
+      <option value="merge">Merge sort</option>
+      <option value="quick">Quicksort</option>
+      <option value="insertion">Insertion sort</option>
+      <option value="stooge">Stooge sort</option>
+    </select>
+    <div id="estimate"></div>
+    <div class="rowline">
+      <button id="start">Start</button>
+      <button class="plain" id="loadBtn">Load saved sort</button>
+      <input type="file" id="loadFile" accept="application/json" class="hidden">
+    </div>
+  </div>
+
+  <div id="compare" class="hidden">
+    <div id="notice" class="hidden"></div>
+    <p id="prompt">Which comes first?</p>
+    <div class="choices">
+      <button class="choice" id="left"></button>
+      <span class="vs">vs</span>
+      <button class="choice" id="right"></button>
+    </div>
+    <div class="hint">Tap a card, or use the &larr; / &rarr; arrow keys</div>
+    <div id="count"></div>
+    <div id="progressWrap">
+      <div id="progressLabel"></div>
+      <div class="pbar"><i id="progressFill"></i></div>
+    </div>
+    <div class="rowline" style="margin-top:.8rem">
+      <button class="plain" id="save">Save progress</button>
+      <button class="plain" id="exit">Exit to home</button>
+    </div>
+  </div>
+
+  <div id="resultBox" class="hidden">
+    <ol id="result"></ol>
+    <div class="rowline">
+      <button class="plain" id="copy">Copy list</button>
+      <button class="plain" id="download">Download .txt</button>
+      <button class="plain" id="restart">Start over</button>
+    </div>
+  </div>
+</div>
+
+<script>
+var CATEGORIES = {"Animals": ["aardvark", "alligator", "alpaca", "antelope", "ape", "armadillo", "baboon", "badger", "bat", "bear", "beaver", "bison", "boar", "buffalo", "bull", "camel", "canary", "capybara", "cat", "chameleon", "cheetah", "chimpanzee", "chinchilla", "chipmunk", "cougar", "cow", "coyote", "crocodile", "crow", "deer", "dingo", "dog", "donkey", "dromedary", "elephant", "elk", "ewe", "ferret", "finch", "fish", "fox", "frog", "gazelle", "gila monster", "giraffe", "gnu", "goat", "gopher", "gorilla", "grizzly bear", "ground hog", "guinea pig", "hamster", "hedgehog", "hippopotamus", "hog", "horse", "hyena", "ibex", "iguana", "impala", "jackal", "jaguar", "kangaroo", "koala", "lamb", "lemur", "leopard", "lion", "lizard", "llama", "lynx", "mandrill", "marmoset", "mink", "mole", "mongoose", "monkey", "moose", "mountain goat", "mouse", "mule", "muskrat", "mustang", "mynah bird", "newt", "ocelot", "opossum", "orangutan", "oryx", "otter", "ox", "panda", "panther", "parakeet", "parrot", "pig", "platypus", "polar bear", "porcupine", "porpoise", "prairie dog", "puma", "rabbit", "raccoon", "ram", "rat", "reindeer", "reptile", "rhinoceros", "salamander", "seal", "sheep", "shrew", "silver fox", "skunk", "sloth", "snake", "squirrel", "tapir", "tiger", "toad", "turtle", "walrus", "warthog", "weasel", "whale", "wildcat", "wolf", "wolverine", "wombat", "woodchuck", "yak", "zebra"], "Fruits": ["apple", "apricot", "avocado", "banana", "bell pepper", "bilberry", "blackberry", "blackcurrant", "blood orange", "blueberry", "boysenberry", "breadfruit", "canary melon", "cantaloupe", "cherimoya", "cherry", "chili pepper", "clementine", "cloudberry", "coconut", "cranberry", "cucumber", "currant", "damson", "date", "dragonfruit", "durian", "eggplant", "elderberry", "feijoa", "fig", "goji berry", "gooseberry", "grape", "grapefruit", "guava", "honeydew", "huckleberry", "jackfruit", "jambul", "jujube", "kiwi fruit", "kumquat", "lemon", "lime", "loquat", "lychee", "mandarine", "mango", "mulberry", "nectarine", "nut", "olive", "orange", "papaya", "passionfruit", "peach", "pear", "persimmon", "physalis", "pineapple", "plum", "pomegranate", "pomelo", "purple mangosteen", "quince", "raisin", "rambutan", "raspberry", "redcurrant", "rock melon", "salal berry", "satsuma", "star fruit", "strawberry", "tamarillo", "tangerine", "tomato", "ugli fruit", "watermelon"], "Vegetables": ["acorn squash", "alfalfa sprout", "amaranth", "anise", "artichoke", "arugula", "asparagus", "aubergine", "azuki bean", "banana squash", "basil", "bean sprout", "beet", "black bean", "black-eyed pea", "bok choy", "borlotti bean", "broad beans", "broccoflower", "broccoli", "brussels sprout", "butternut squash", "cabbage", "calabrese", "caraway", "carrot", "cauliflower", "cayenne pepper", "celeriac", "celery", "chamomile", "chard", "chayote", "chickpea", "chives", "cilantro", "collard green", "corn", "corn salad", "courgette", "cucumber", "daikon", "delicata", "dill", "eggplant", "endive", "fennel", "fiddlehead", "frisee", "garlic", "gem squash", "ginger", "green bean", "green pepper", "habanero", "herbs and spice", "horseradish", "hubbard squash", "jalapeno", "jerusalem artichoke", "jicama", "kale", "kidney bean", "kohlrabi", "lavender", "leek", "legume", "lemon grass", "lentils", "lettuce", "lima bean", "mamey", "mangetout", "marjoram", "mung bean", "mushroom", "mustard green", "navy bean", "new zealand spinach", "nopale", "okra", "onion", "oregano", "paprika", "parsley", "parsnip", "patty pan", "pea", "pinto bean", "potato", "pumpkin", "radicchio", "radish", "rhubarb", "rosemary", "runner bean", "rutabaga", "sage", "scallion", "shallot", "skirret", "snap pea", "soy bean", "spaghetti squash", "spinach", "squash", "sweet potato", "tabasco pepper", "taro", "tat soi", "thyme", "topinambur", "tubers", "turnip", "wasabi", "water chestnut", "watercress", "white radish", "yam", "zucchini"], "Instruments": ["French horn", "accordion", "air horn", "baby grand piano", "bagpipe", "banjo", "bass guitar", "bassoon", "bugle", "calliope", "cello", "clarinet", "clavichord", "concertina", "didgeridoo", "dobro", "dulcimer", "fiddle", "fife", "flugelhorn", "flute", "glockenspiel", "grand piano", "guitar", "harmonica", "harp", "harpsichord", "hurdy-gurdy", "kazoo", "kick drum", "lute", "lyre", "mandolin", "marimba", "mellotran", "melodica", "oboe", "pan flute", "piano", "piccolo", "pipe organ", "saxaphone", "sitar", "sousaphone", "tambourine", "theremin", "trombone", "tuba", "ukulele", "viola", "violin", "vuvuzela", "washtub bass", "xylophone", "zither"], "Countries": ["Afghanistan", "Albania", "Algeria", "Andorra", "Angola", "Antigua & Barbuda", "Argentina", "Armenia", "Australia", "Austria", "Azerbaijan", "Bahamas", "Bahrain", "Bangladesh", "Barbados", "Belarus", "Belgium", "Belize", "Benin", "Bhutan", "Bolivia", "Bosnia & Herzegovina", "Botswana", "Brazil", "Brunei", "Bulgaria", "Burkina Faso", "Burundi", "Cambodia", "Cameroon", "Canada", "Cape Verde", "Chad", "Chile", "China", "Colombia", "Comoros", "Congo", "Costa Rica", "Cote D'Ivoire", "Croatia", "Cuba", "Cyprus", "Czech Republic", "Denmark", "Djibouti", "Dominica", "Dominican Republic", "East Timor", "Ecuador", "Egypt", "El Salvador", "Equatorial Guinea", "Eritrea", "Estonia", "Eswatini", "Ethiopia", "Fiji", "Finland", "France", "Gabon", "Gambia", "Georgia", "Germany", "Ghana", "Greece", "Grenada", "Guatemala", "Guinea", "Guinea-Bissau", "Guyana", "Haiti", "Honduras", "Hungary", "Iceland", "India", "Indonesia", "Iran", "Iraq", "Ireland", "Israel", "Italy", "Jamaica", "Japan", "Jordan", "Kazakhstan", "Kenya", "Kiribati", "Kosovo", "Kuwait", "Kyrgyzstan", "Laos", "Latvia", "Lebanon", "Lesotho", "Liberia", "Libya", "Liechtenstein", "Lithuania", "Luxembourg", "Madagascar", "Malawi", "Malaysia", "Maldives", "Mali", "Malta", "Marshall Islands", "Mauritania", "Mauritius", "Mexico", "Micronesia", "Moldova", "Monaco", "Mongolia", "Montenegro", "Morocco", "Mozambique", "Myanmar", "Namibia", "Nauru", "Nepal", "New Zealand", "Nicaragua", "Niger", "Nigeria", "North Korea", "North Macedonia", "Norway", "Oman", "Pakistan", "Palau", "Palestinian State", "Panama", "Papua New Guinea", "Paraguay", "Peru", "Poland", "Portugal", "Qatar", "Romania", "Russia", "Rwanda", "Samoa", "San Marino", "Sao Tome & Principe", "Saudi Arabia", "Senegal", "Serbia", "Seychelles", "Sierra Leone", "Singapore", "Slovakia", "Slovenia", "Solomon Islands", "Somalia", "South Africa", "South Korea", "South Sudan", "Spain", "Sri Lanka", "St. Kitts & Nevis", "St. Lucia", "Sudan", "Suriname", "Sweden", "Switzerland", "Syria", "Taiwan", "Tajikistan", "Tanzania", "Thailand", "The Netherlands", "The Philippines", "Togo", "Tonga", "Trinidad & Tobago", "Tunisia", "Turkey", "Turkmenistan", "Tuvalu", "Uganda", "Ukraine", "United Arab Emirates", "United Kingdom", "Uruguay", "Uzbekistan", "Vanuatu", "Vatican City", "Venezuela", "Vietnam", "Western Sahara", "Yemen", "Zambia", "Zimbabwe"], "Sports": ["Aikido", "Airsoft", "Angling", "Archery", "Austus", "BMX", "Ba game", "Ball", "Bando", "Bandy", "Bartitsu", "Baseball", "Beagling", "Bifins", "Biribol", "Bocce", "Boccia", "Bokator", "Boules", "Bowling", "Bowls", "Boxing", "Bunnock", "Caid", "Calva", "Cammag", "Camogie", "Casting", "Chicago", "Cirit", "Club", "Cnapan", "Cowboy", "Cricket", "Croquet", "Cuju", "Curling", "Cutting", "Cycling", "Darts", "Discus", "Diving", "Dumog", "Ekiden", "Elle", "Enduro", "Eskrima", "Fastnet", "Fencing", "Fishing", "Fives", "Floor", "Flyak", "Footbag", "Futsal", "Ga-ga", "Gatka", "Gliding", "Glima", "Golf", "Gouren", "Gungdo", "Guts", "Hapkido", "Headis", "Hiking", "Hockey", "Hoop", "Hot box", "Hunter", "Hurdles", "Hurling", "Iaidō", "Janggi", "Javelin", "Jianzi", "Judo", "Jugger", "Jujutsu", "Jumping", "Jōdō", "Jūkendō", "Kabaddi", "Karate", "Kemari", "Kendo", "Kenpō", "Kho kho", "Killer", "Kubb", "Kumdo", "Kung fu", "Kurash", "Kyūdō", "Lethwei", "Luge", "Mahjong", "Matball", "Matkot", "Miniten", "Mölkky", "Netball", "Novuss", "Oina", "Oztag", "Padel", "Palant", "Palla", "Parkour", "Patball", "Pato", "Peteca", "Polo", "Rafting", "Reining", "Reversi", "Ribbon", "Rocball", "Rodeo", "Rope", "Roping", "Rowing", "Running", "Sailing", "Sanshou", "Savate", "Shinty", "Shogi", "Sikaran", "Silat", "Sipa", "Skibob", "Skiing", "Snooker", "Spongee", "Sprint", "Squash", "Ssireum", "Stické", "Subak", "Sumo", "Surfing", "Systema", "Sōjutsu", "Tag", "Taidō", "Tennis", "Torball", "Trapeze", "Trial", "Trugo", "Vault", "Vigoro", "Volata", "Vovinam", "Walking", "Wushu", "Xare", "Xiangqi", "Yoyoing"], "General nouns": ["above", "access", "account", "act", "action", "activities", "address", "age", "air", "all", "america", "american", "analysis", "and", "april", "are", "area", "art", "article", "articles", "audio", "august", "author", "back", "being", "best", "better", "black", "blue", "board", "body", "book", "books", "box", "browse", "building", "business", "but", "buy", "call", "can", "car", "card", "care", "cart", "case", "categories", "category", "center", "change", "changes", "check", "children", "china", "city", "class", "click", "club", "code", "college", "comment", "comments", "community", "company", "compare", "computer", "conditions", "contact", "content", "control", "copyright", "cost", "country", "county", "course", "court", "credit", "current", "customer", "data", "date", "day", "days", "december", "department", "design", "details", "digital", "directory", "does", "down", "east", "education", "end", "english", "equipment", "estate", "even", "event", "events", "example", "experience", "family", "fax", "features", "february", "few", "field", "file", "files", "find", "first", "following", "food", "form", "forum", "forums", "found", "four", "free", "friend", "full", "gallery", "game", "games", "gay", "general", "get", "gift", "girls", "give", "given", "going", "good", "government", "great", "group", "groups", "guide", "hard", "have", "health", "help", "here", "high", "history", "home", "hotel", "hotels", "hours", "house", "how", "human", "image", "index", "industry", "info", "insurance", "internet", "issue", "issues", "item", "items", "jan", "january", "job", "jobs", "john", "join", "july", "june", "key", "know", "language", "large", "last", "latest", "law", "left", "less", "let", "level", "library", "life", "light", "like", "line", "link", "links", "list", "listing", "little", "local", "location", "long", "look", "looking", "love", "low", "mail", "main", "major", "make", "making", "man", "management", "many", "map", "march", "market", "may", "media", "medical", "member", "members", "memory", "men", "message", "might", "mobile", "model", "money", "month", "more", "most", "movie", "movies", "much", "music", "must", "name", "national", "need", "needs", "network", "news", "night", "north", "note", "november", "now", "number", "october", "off", "offer", "offers", "office", "old", "one", "open", "options", "order", "out", "over", "page", "pages", "paper", "park", "part", "party", "password", "pay", "payment", "people", "person", "personal", "phone", "photo", "photos", "picture", "pictures", "place", "plan", "play", "point", "poker", "policy", "possible", "post", "posts", "power", "press", "price", "prices", "print", "privacy", "private", "problem", "process", "product", "products", "profile", "program", "programs", "project", "property", "public", "quality", "question", "questions", "quote", "range", "rate", "rates", "rating", "read", "real", "red", "register", "release", "reply", "report", "request", "research", "resources", "result", "results", "return", "review", "reviews", "right", "rights", "road", "room", "said", "sale", "sales", "save", "say", "school", "science", "search", "second", "section", "security", "see", "sell", "seller", "send", "september", "series", "server", "service", "services", "set", "sex", "she", "shipping", "shop", "shopping", "show", "side", "sign", "single", "site", "sites", "size", "small", "social", "software", "something", "source", "south", "special", "sports", "staff", "standard", "star", "start", "state", "states", "status", "still", "stock", "store", "stores", "story", "street", "student", "students", "study", "subject", "support", "system", "systems", "table", "take", "tax", "team", "technology", "teen", "terms", "test", "texas", "text", "then", "there", "things", "think", "thread", "three", "time", "times", "title", "today", "tools", "top", "topic", "total", "training", "travel", "two", "type", "university", "use", "user", "users", "using", "value", "version", "video", "view", "visit", "want", "war", "water", "way", "web", "week", "well", "west", "when", "where", "while", "white", "who", "why", "will", "windows", "women", "work", "working", "world", "yahoo", "year", "years", "yes", "york", "you", "young"]};
+var MEASURED = {"merge_insertion": {"2": 1, "3": 2.7, "4": 4.7, "5": 7.3, "6": 9.7, "7": 13.1, "8": 16.1, "10": 22.8, "12": 30.7, "16": 45.8, "20": 63.6, "24": 81.5, "32": 121.2, "48": 208.2, "64": 301.8, "100": 533.5, "128": 727.3, "200": 1255.8, "256": 1699.5, "500": 3796.7, "1000": 8565.3}, "merge": {"2": 1, "3": 2.7, "4": 4.7, "5": 7.3, "6": 9.9, "7": 12.6, "8": 15.8, "10": 22.6, "12": 30, "16": 45.6, "20": 63.4, "24": 82.3, "32": 121.2, "48": 209.9, "64": 306.9, "100": 544.9, "128": 735.8, "200": 1285.5, "256": 1728.7, "500": 3857.7, "1000": 8703.7}, "quick": {"2": 1, "3": 2.6, "4": 4.9, "5": 7.3, "6": 10.9, "7": 14, "8": 16.8, "10": 24.6, "12": 32.5, "16": 50, "20": 71.3, "24": 93.7, "32": 135.7, "48": 242.9, "64": 360, "100": 630.5, "128": 886.2, "200": 1494.5, "256": 2087.7, "500": 4570.3, "1000": 11141}, "insertion": {"2": 1, "3": 2.7, "4": 5, "5": 7.8, "6": 10.8, "7": 15.2, "8": 19.9, "10": 29.6, "12": 42.7, "16": 71.4, "20": 109.6, "24": 156.6, "32": 276.7, "48": 593.3, "64": 1088.1, "100": 2563.3, "128": 4214, "200": 9813.8, "256": 16852.5, "500": 63865.3, "1000": 254933.7}, "stooge": {"2": 1, "3": 4, "4": 13, "5": 40, "6": 40, "7": 121, "8": 121, "10": 364, "12": 364, "16": 1093, "20": 3280, "24": 3280, "32": 9841, "48": 29524}};
+
+(function(){
+  const $ = id => document.getElementById(id);
+  let resolver=null, comparisons=0;
+  let cache={};
+  let lastSorted=[];
+
+  const key=(a,b)=>a+"\u0000"+b;
+
+  // Slider is linear from 2..(size of selected category). Its max updates when the
+  // category changes so you can never request more items than the dataset holds.
+  function sliderN(){ return +$("slider").value; }
+  function capSliderToCategory(){
+    const words=CATEGORIES[$("category").value]||[];
+    const max=Math.max(2, words.length);
+    $("slider").max=max;
+    if(sliderN()>max) $("slider").value=max;
+    $("nlabel").textContent=sliderN();
+  }
+  function refreshLabel(){ $("nlabel").textContent=sliderN(); refreshEstimate(); }
+  $("slider").oninput=refreshLabel;
+
+  function currentItemCount(){
+    return new Set($("items").value.split("\n").map(s=>s.trim()).filter(Boolean)).size;
+  }
+  function refreshItemCount(){
+    const n=currentItemCount();
+    $("itemcount").textContent = n===1 ? "1 item" : n+" items";
+  }
+
+  // Estimate comparisons by interpolating the empirically-measured table (MEASURED),
+  // which is accurate at small N where closed-form formulas are poor. Between measured
+  // points we interpolate in log-log space; beyond the largest point we extrapolate
+  // with the algorithm's known asymptotic growth.
+  const GROWTH={ merge_insertion:(n)=>n*Math.log2(n), merge:(n)=>n*Math.log2(n),
+    quick:(n)=>n*Math.log2(n), insertion:(n)=>n*n,
+    stooge:(n)=>Math.pow(n,2.7095) };
+  function estimateComparisons(n, algo){
+    if(n<2) return 0;
+    const tbl=MEASURED[algo]; if(!tbl) return Math.round(n*Math.log2(n));
+    const xs=Object.keys(tbl).map(Number).sort((a,b)=>a-b);
+    if(tbl[n]!==undefined) return Math.round(tbl[n]);
+    if(n<=xs[0]) return Math.round(tbl[xs[0]]);
+    if(n>=xs[xs.length-1]){
+      // extrapolate from the top measured point using the growth ratio
+      const top=xs[xs.length-1], g=GROWTH[algo];
+      return Math.round(tbl[top]*g(n)/g(top));
+    }
+    // find bracketing measured points, interpolate in log-log
+    let lo=xs[0], hi=xs[xs.length-1];
+    for(let i=0;i<xs.length-1;i++){ if(n>=xs[i]&&n<=xs[i+1]){ lo=xs[i]; hi=xs[i+1]; break; } }
+    const t=(Math.log(n)-Math.log(lo))/(Math.log(hi)-Math.log(lo));
+    const val=Math.exp(Math.log(tbl[lo])+t*(Math.log(tbl[hi])-Math.log(tbl[lo])));
+    return Math.round(val);
+  }
+  function refreshEstimate(){
+    const actualN=currentItemCount();
+    const useN = actualN>=2 ? actualN : sliderN();
+    const c=estimateComparisons(useN,$("algo").value);
+    const src = actualN>=2 ? actualN+" items" : "~"+useN+" items (slider)";
+    $("estimate").textContent="Estimated \u2248"+c.toLocaleString()+" comparisons for "+src;
+  }
+  $("algo").onchange=refreshEstimate;
+  $("items").addEventListener("input",()=>{ refreshItemCount(); refreshEstimate(); });
+
+  // Populate the category dropdown from CATEGORIES.
+  (function initCategories(){
+    const sel=$("category");
+    for(const name of Object.keys(CATEGORIES)){
+      const o=document.createElement("option"); o.value=name; o.textContent=name; sel.appendChild(o);
+    }
+  })();
+  $("category").onchange=()=>{ capSliderToCategory(); refreshEstimate(); };
+
+  $("random").onclick=()=>{
+    const cat=$("category").value;
+    const words=CATEGORIES[cat]||[];
+    let n=sliderN();
+    if(n>words.length) n=words.length;
+    const pool=words.slice();
+    for(let i=pool.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[pool[i],pool[j]]=[pool[j],pool[i]];}
+    $("items").value=pool.slice(0,n).join("\n");
+    refreshItemCount(); refreshEstimate();
+  };
+
+  function relText(a,b,c){ return c<0? a+" < "+b : c>0? a+" > "+b : a+" = "+b; }
+
+  // Progress = fraction of ordering-uncertainty eliminated so far.
+  // At the start, all n! orderings are possible (log2(n!) bits of uncertainty); when
+  // sorting finishes, exactly 1 remains (0 bits). Progress is the fraction of those bits
+  // removed. For small n we count the linear extensions still consistent with the known
+  // relations exactly; for large n (counting is #P-complete) we use the fraction of pairs
+  // whose order is known, which tracks the true value closely and is O(n^2).
+  let progressItems=[];
+  function knownRelations(){
+    // Build directed reachability (a<b) from the answers recorded in the cache.
+    const items=progressItems, idx=new Map(items.map((x,i)=>[x,i])), n=items.length;
+    const reach=Array.from({length:n},()=>new Set());
+    const addEdge=(a,b)=>{ const u=idx.get(a),v=idx.get(b); if(u!==undefined&&v!==undefined) reach[u].add(v); };
+    for(const k in cache){ const v=cache[k]; if(v<0){ const [a,b]=k.split("\u0000"); addEdge(a,b); } }
+    // transitive closure
+    let changed=true;
+    while(changed){ changed=false;
+      for(let a=0;a<n;a++) for(const b of [...reach[a]]) for(const c of reach[b])
+        if(!reach[a].has(c)){ reach[a].add(c); changed=true; } }
+    return {reach, n};
+  }
+  function log2fact(n){ let s=0; for(let k=2;k<=n;k++) s+=Math.log2(k); return s; }
+  function countExtensions(reach, n){
+    // exact count of linear extensions via bitmask DP (only called for small n)
+    const memo=new Map();
+    const pred=new Array(n).fill(0);
+    for(let a=0;a<n;a++) for(const b of reach[a]) pred[b]|=(1<<a);
+    function cnt(rem){
+      if(rem===0) return 1;
+      const cached=memo.get(rem); if(cached!==undefined) return cached;
+      let t=0;
+      for(let i=0;i<n;i++){ if(!(rem&(1<<i))) continue;
+        if((pred[i] & rem)===0) t+=cnt(rem & ~(1<<i)); }  // i placeable if no predecessor remains
+      memo.set(rem,t); return t;
+    }
+    return cnt((1<<n)-1);
+  }
+  function updateProgress(){
+    const n=progressItems.length;
+    let frac;
+    if(n<2){ frac=1; }
+    else {
+      const {reach}=knownRelations();
+      if(n<=10){
+        const total=log2fact(n);
+        const ext=countExtensions(reach, n);
+        frac = total>0 ? (total - Math.log2(ext))/total : 1;
+      } else {
+        // known-pair fraction (transitively closed): close approximation, O(n^2)
+        let known=0; const tot=n*(n-1)/2;
+        for(let i=0;i<n;i++) for(let j=i+1;j<n;j++) if(reach[i].has(j)||reach[j].has(i)) known++;
+        frac = tot>0 ? known/tot : 1;
+      }
+    }
+    frac=Math.max(0, Math.min(1, frac));
+    $("progressFill").style.width=(frac*100).toFixed(1)+"%";
+    $("progressLabel").textContent="Progress: about "+Math.round(frac*100)+"% of the order determined";
+  }
+
+  // Ask the user a single comparison. Every comparison the sort makes is asked plainly;
+  // the answer is recorded and returned. Inconsistent answers are accepted as given.
+  function askUser(a,b){
+    comparisons++;
+    $("left").textContent=a; $("right").textContent=b;
+    $("count").textContent=comparisons+(comparisons===1?" comparison":" comparisons");
+    return new Promise(res=>{
+      resolver=v=>{
+        cache[key(a,b)]=v; cache[key(b,a)]=-v;
+        updateProgress();
+        res(v);
+      };
+    });
+  }
+  // left = "a comes first" (a<b, returns -1); right = "b comes first" (a>b, returns +1).
+  function pickLeft(){ resolver&&resolver(-1); }
+  function pickRight(){ resolver&&resolver(1); }
+  $("left").onclick = pickLeft;
+  $("right").onclick = pickRight;
+  // Arrow keys answer the current comparison when the compare screen is showing.
+  document.addEventListener("keydown",(e)=>{
+    if($("compare").classList.contains("hidden")) return;
+    if(e.key==="ArrowLeft"){ e.preventDefault(); pickLeft(); }
+    else if(e.key==="ArrowRight"){ e.preventDefault(); pickRight(); }
+  });
+
+  const algos={
+    async insertion(arr,cmp){
+      const a=arr.slice();
+      for(let i=1;i<a.length;i++){let j=i;
+        while(j>0&&(await cmp(a[j-1],a[j]))>0){[a[j-1],a[j]]=[a[j],a[j-1]];j--;}}
+      return a;
+    },
+    async merge(arr,cmp){
+      if(arr.length<=1) return arr;
+      const mid=arr.length>>1;
+      const L=await algos.merge(arr.slice(0,mid),cmp), R=await algos.merge(arr.slice(mid),cmp);
+      const o=[];let i=0,j=0;
+      while(i<L.length&&j<R.length) ((await cmp(L[i],R[j]))<=0)?o.push(L[i++]):o.push(R[j++]);
+      while(i<L.length)o.push(L[i++]); while(j<R.length)o.push(R[j++]); return o;
+    },
+    async quick(arr,cmp){
+      if(arr.length<=1) return arr;
+      const p=arr[Math.floor(Math.random()*arr.length)];
+      const lo=[],eq=[],hi=[];
+      for(const x of arr){ if(x===p){eq.push(x);continue;} const c=await cmp(x,p);(c<0?lo:c>0?hi:eq).push(x);}
+      return [...await algos.quick(lo,cmp),...eq,...await algos.quick(hi,cmp)];
+    },
+
+    // Ford-Johnson merge-insertion: near comparison-optimal for small n.
+    // Items are unique strings, so indexOf(winner) is unambiguous.
+    async merge_insertion(arr,cmp){
+      const binInsertBounded=async(chain,x,hiLimit)=>{
+        let lo=0,hi=hiLimit;
+        while(lo<hi){const m=(lo+hi)>>1;((await cmp(chain[m],x))<=0)?lo=m+1:hi=m;}
+        chain.splice(lo,0,x);};
+      const jacob=(k)=>Math.round((Math.pow(2,k+1)+Math.pow(-1,k))/3);
+      const rec=async(a)=>{
+        const n=a.length; if(n<=1) return a.slice();
+        const pairs=[]; let odd=null;
+        for(let i=0;i+1<n;i+=2){ const x=a[i],y=a[i+1];
+          (await cmp(x,y))<=0 ? pairs.push({lo:x,hi:y}) : pairs.push({lo:y,hi:x}); }
+        if(n%2) odd=a[n-1];
+        const winners=pairs.map(p=>p.hi);
+        const sortedWinners=await rec(winners);
+        const loserByHi=new Map();
+        for(const p of pairs){ if(!loserByHi.has(p.hi)) loserByHi.set(p.hi,[]); loserByHi.get(p.hi).push(p.lo); }
+        const chain=sortedWinners.slice();
+        const pend=[];
+        for(const w of sortedWinners){ const l=loserByHi.get(w); if(l&&l.length) pend.push({lo:l.pop(),hiVal:w}); }
+        if(odd!==null) pend.push({lo:odd,hiVal:null});
+        const inserted=new Array(pend.length).fill(false); const order=[]; let k=1;
+        while(order.length<pend.length){
+          const j=jacob(k), jp=jacob(k-1);
+          for(let idx=Math.min(j,pend.length)-1; idx>=jp && idx>=0; idx--)
+            if(!inserted[idx]){inserted[idx]=true;order.push(idx);}
+          k++;
+          if(k>40){for(let idx=0;idx<pend.length;idx++) if(!inserted[idx]){inserted[idx]=true;order.push(idx);} break;}
+        }
+        for(const idx of order){ const {lo,hiVal}=pend[idx];
+          let bound=chain.length; if(hiVal!==null){const wp=chain.indexOf(hiVal); if(wp>=0) bound=wp;}
+          await binInsertBounded(chain,lo,bound); }
+        return chain;};
+      return await rec(arr.slice());
+    },
+
+    // Stooge sort: swap ends if out of order, then recurse on first 2/3,
+    // last 2/3, and first 2/3 again. O(n^2.71) -- keep n tiny.
+    async stooge(arr,cmp){
+      const a=arr.slice();
+      const rec=async(i,j)=>{ if((await cmp(a[i],a[j]))>0){[a[i],a[j]]=[a[j],a[i]];}
+        if(j-i+1>2){ const t=Math.floor((j-i+1)/3); await rec(i,j-t); await rec(i+t,j); await rec(i,j-t);} };
+      if(a.length>1) await rec(0,a.length-1); return a;
+    }
+  };
+
+  let runToken=0;           // increments to invalidate a stale in-flight sort
+  let currentItems=null, currentAlgo=null;
+
+  class Abort{}             // thrown to unwind an aborted sort
+
+  async function beginSort(){
+    const myToken=++runToken;
+    comparisons=0;
+    let sorted;
+    try{
+      sorted=await fullSortGuarded(currentAlgo, myToken);
+    }catch(e){ if(e instanceof Abort) return; throw e; }
+    if(myToken!==runToken) return;   // superseded
+    showResult(sorted);
+  }
+
+  async function fullSortGuarded(algoName, myToken){
+    const items=currentItems;
+    const algo=algos[algoName];
+    const cmp=async(a,b)=>{
+      if(myToken!==runToken) throw new Abort();
+      if(cache[key(a,b)]!==undefined) return cache[key(a,b)];
+      const v=await askUser(a,b);
+      if(myToken!==runToken) throw new Abort();
+      return v;
+    };
+    return await algo(items, cmp);   // the algorithm's output is the sorted order
+  }
+
+  function showResult(sorted){
+    lastSorted=sorted.slice();
+    $("compare").classList.add("hidden");
+    $("result").innerHTML="";
+    sorted.forEach(x=>{ const li=document.createElement("li"); li.textContent=x; $("result").appendChild(li); });
+    $("resultBox").classList.remove("hidden");
+  }
+
+  function goHome(){
+    runToken++;                 // invalidate any in-flight sort
+    resolver=null;
+    $("compare").classList.add("hidden");
+    $("resultBox").classList.add("hidden");
+    $("notice").classList.add("hidden");
+    $("setup").classList.remove("hidden");
+  }
+  $("exit").onclick=goHome;
+
+  // Launch a sort. If `restore` is provided, pre-populate the answer cache from a save.
+  function launchSort(uniq, algoName, restore){
+    cache={};
+    currentItems=uniq; currentAlgo=algoName;
+    if(restore && restore.cache) for(const k in restore.cache) cache[k]=restore.cache[k];
+    progressItems=uniq.slice();
+    $("progressFill").style.width="0%"; $("progressLabel").textContent="Progress: 0% of the order determined";
+    $("notice").classList.add("hidden");
+    $("setup").classList.add("hidden");
+    $("resultBox").classList.add("hidden");
+    $("compare").classList.remove("hidden");
+    updateProgress();
+    beginSort();
+  }
+
+  $("start").onclick=()=>{
+    const raw=$("items").value.split("\n").map(s=>s.trim()).filter(Boolean);
+    const uniq=[...new Set(raw)];
+    if(uniq.length<2){alert("Enter at least two distinct items, one per line.");return;}
+    launchSort(uniq, $("algo").value, null);
+  };
+
+  // ---- Save / load a session ----
+  // We serialize enough to resume: items, algorithm, and all answered comparisons (cache).
+  function serializeCache(){
+    // cache keys are "a\u0000b"; store only one direction per pair to keep it compact
+    const seen=new Set(); const out={};
+    for(const k in cache){ const [a,b]=k.split("\u0000");
+      const canon = a<b ? a+"\u0000"+b : b+"\u0000"+a;
+      if(seen.has(canon)) continue; seen.add(canon);
+      out[canon]= (a<b)? cache[k] : -cache[k];  // store direction for a<b ordering
+    }
+    return out;
+  }
+  function rehydrateCache(saved){
+    const c={};
+    for(const k in saved){ const [a,b]=k.split("\u0000"); const v=saved[k];
+      c[a+"\u0000"+b]=v; c[b+"\u0000"+a]=-v; }
+    return c;
+  }
+  $("save").onclick=()=>{
+    const data={
+      version:1, algo:currentAlgo, items:currentItems,
+      cache:serializeCache(),
+      savedAt:new Date().toISOString()
+    };
+    const blob=new Blob([JSON.stringify(data)],{type:"application/json"});
+    const url=URL.createObjectURL(blob);
+    const a=document.createElement("a");
+    a.href=url; a.download="hand-sort-"+(currentAlgo||"sort")+".json";
+    document.body.appendChild(a); a.click(); a.remove();
+    setTimeout(()=>URL.revokeObjectURL(url),1000);
+  };
+  $("loadBtn").onclick=()=>$("loadFile").click();
+  $("loadFile").onchange=(e)=>{
+    const file=e.target.files&&e.target.files[0]; if(!file) return;
+    const reader=new FileReader();
+    reader.onload=()=>{
+      try{
+        const data=JSON.parse(reader.result);
+        if(!data.items||!data.algo){ alert("That file doesn't look like a saved sort."); return; }
+        // reflect into the setup UI too, so exiting shows the right state
+        $("items").value=data.items.join("\n");
+        $("algo").value=data.algo;
+        refreshItemCount(); refreshEstimate();
+        launchSort(data.items, data.algo, { cache: rehydrateCache(data.cache||{}) });
+      }catch(err){ alert("Could not read that file: "+err.message); }
+    };
+    reader.readAsText(file);
+    e.target.value="";   // allow re-loading the same file later
+  };
+
+  // ---- Copy / download the final list ----
+  $("copy").onclick=async()=>{
+    const text=lastSorted.join("\n");
+    try{ await navigator.clipboard.writeText(text); flash($("copy"),"Copied!"); }
+    catch(_){ // fallback for environments without clipboard permission
+      const ta=document.createElement("textarea"); ta.value=text; document.body.appendChild(ta);
+      ta.select(); try{document.execCommand("copy");}catch(e){} ta.remove(); flash($("copy"),"Copied!");
+    }
+  };
+  $("download").onclick=()=>{
+    const blob=new Blob([lastSorted.join("\n")+"\n"],{type:"text/plain"});
+    const url=URL.createObjectURL(blob);
+    const a=document.createElement("a"); a.href=url; a.download="sorted-list.txt";
+    document.body.appendChild(a); a.click(); a.remove();
+    setTimeout(()=>URL.revokeObjectURL(url),1000);
+  };
+  function flash(btn,msg){ const old=btn.textContent; btn.textContent=msg;
+    setTimeout(()=>{ btn.textContent=old; }, 1200); }
+
+  $("restart").onclick=()=>{ runToken++; $("resultBox").classList.add("hidden"); $("setup").classList.remove("hidden"); };
+
+  capSliderToCategory();
+  refreshItemCount();
+  refreshLabel();
+  refreshEstimate();
+})();
+</script>
+</body>
+</html>

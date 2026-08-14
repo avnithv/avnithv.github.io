@@ -8,7 +8,9 @@
     "preview": "astro preview"
   },
   "dependencies": {
+    "@myriaddreamin/rehype-typst": "^0.7.0",
     "astro": "^4.16.0",
-    "marked": "^18.0.5"
+    "marked": "^18.0.5",
+    "remark-math": "^6.0.0"
   }
 }

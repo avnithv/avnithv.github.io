@@ -18,7 +18,7 @@ const last = page.slug.split('/').pop() ?? page.slug;
 const pretty = last.replace(/[-_]/g, ' ').replace(/\b\w/g, (c) => c.toUpperCase());
 const isHome = page.slug === 'home';
 ---
-<Base title={`${pretty} — Python Workshops`} description="Python Programming Lessons by Avnith Vijayram.">
+<Base title={`${pretty} - Python Workshops`} description="Python Programming Lessons by Avnith Vijayram.">
   <p class="eyebrow">
     <a href="/projects/pythonworkshops">python workshops</a>
     {!isHome && <> · <a href="/projects/pythonworkshops/home">all lessons</a></>}

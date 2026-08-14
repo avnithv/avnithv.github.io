@@ -13,10 +13,10 @@ export async function getStaticPaths() {
 const { post } = Astro.props;
 const { Content } = await post.render();
 const fmt = (d: Date) =>
-  // timeZone: UTC — see the note in src/pages/blog/index.astro.
+  // timeZone: UTC - see the note in src/pages/blog/index.astro.
   d.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric', timeZone: 'UTC' });
 ---
-<Base title={`${post.data.title} — Avnith Vijayram`} description={post.data.description}>
+<Base title={`${post.data.title} - Avnith Vijayram`} description={post.data.description}>
   <p class="eyebrow">{fmt(post.data.date)}</p>
   <h1>{post.data.title}</h1>
   {post.data.tags.length > 0 && (

@@ -20,7 +20,7 @@ const { honor } = Astro.props;
 const { Content } = await honor.render();
 const ext = honor.data.link && opensInNewTab(honor.data.link);
 ---
-<Base title={`${honor.data.title} — Avnith Vijayram`} description={honor.data.description}>
+<Base title={`${honor.data.title} - Avnith Vijayram`} description={honor.data.description}>
   <p class="eyebrow">honor · {honor.data.year}</p>
   <h1>{honor.data.title}</h1>
   {honor.data.org && <p class="lede">{honor.data.org}</p>}

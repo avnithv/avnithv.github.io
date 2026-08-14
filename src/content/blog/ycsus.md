@@ -34,7 +34,7 @@ I spent the past weekend at YC Startup School this summer. After some reflection
 
 ## 5. AI is better than doctors and may replace them
 
-- Vinod Khosla expects AI to almost completely replace doctors, with fees dropping significantly — he calls it "20% doctor included," with humans doing the remaining 20%.
+- Vinod Khosla expects AI to almost completely replace doctors, with fees dropping significantly: he calls it "20% doctor included," with humans doing the remaining 20%.
 - Even current AI gives more reliable and consistent diagnoses than humans. If you ask 3 different doctors, you can get 3 different diagnoses.
 - AI can pull from large corpuses reliably, so treatment isn't based on one person's opinion.
 - Doctors can't reliably keep track of the thousands of relevant medical articles coming out each year, even within their own specialty.
@@ -52,7 +52,7 @@ I spent the past weekend at YC Startup School this summer. After some reflection
 
 ## 8. Be mildly helpful to a lot of people
 
-- "Find a way to be like mildly helpful to a lot of people ... it really goes a long way in terms of these things coming together later." — Sam Altman
+- "Find a way to be like mildly helpful to a lot of people ... it really goes a long way in terms of these things coming together later." - Sam Altman
 - Best way to maximize the chance one of these relationships becomes very useful in the future.
 
 ## 9. Less instruction is better

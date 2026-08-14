@@ -1,6 +1,6 @@
 import { defineCollection, z } from 'astro:content';
 
-// Ordering and which items are featured on the home page are NOT set here —
+// Ordering and which items are featured on the home page are NOT set here -
 // they live in one place: src/site-order.ts.
 
 const blog = defineCollection({
@@ -28,7 +28,7 @@ const projects = defineCollection({
 });
 
 // Honors & awards. Add one by dropping a markdown file in src/content/honors/.
-// The body is optional — add one only if you want a detail page at
+// The body is optional - add one only if you want a detail page at
 // /honors/<slug> (e.g. to show a certificate image). Drop materials in
 // public/honors/<slug>/.
 const honors = defineCollection({
@@ -43,7 +43,7 @@ const honors = defineCollection({
   }),
 });
 
-// Python Workshops — a migrated multi-page Jekyll site. The source markdown has
+// Python Workshops - a migrated multi-page Jekyll site. The source markdown has
 // no frontmatter, so every field is optional. Pages render under
 // /projects/pythonworkshops/<path> via src/pages/projects/pythonworkshops/[...slug].astro.
 const pythonworkshops = defineCollection({

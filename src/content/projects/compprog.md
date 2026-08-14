@@ -15,9 +15,9 @@ I started out on Codeforces before shifting most of my focus to USACO and AtCode
 
 ### Codeforces
 
-- Handle: [avnithv ↗](https://codeforces.com/profile/avnithv) — peak rating 2203, Master
-- [Codeforces Round 896 (Div. 2) ↗](https://codeforces.com/contest/1869/standings/participant/163089657#p163089657) (09/10/2023) — rank 4, +282
-- [Codeforces Round 906 (Div. 1) ↗](https://codeforces.com/contest/1889/standings/participant/166558823#p166558823) (10/28/2023) — rank 177, +129
+- Handle: [avnithv ↗](https://codeforces.com/profile/avnithv) - peak rating 2203, Master
+- [Codeforces Round 896 (Div. 2) ↗](https://codeforces.com/contest/1869/standings/participant/163089657#p163089657) (09/10/2023) - rank 4, +282
+- [Codeforces Round 906 (Div. 1) ↗](https://codeforces.com/contest/1889/standings/participant/166558823#p166558823) (10/28/2023) - rank 177, +129
 
 ### USACO
 
@@ -25,8 +25,8 @@ I started out on Codeforces before shifting most of my focus to USACO and AtCode
 
 ### AtCoder
 
-- Handle: [avnithv ↗](https://atcoder.jp/users/avnithv) — current rating 1804, 1 Kyu
-- [ABC 458 ↗](https://atcoder.jp/contests/abc458/submissions?f.User=avnithv) (05/16/2026) — rank 159, performance 2296, +151
+- Handle: [avnithv ↗](https://atcoder.jp/users/avnithv) - current rating 1804, 1 Kyu
+- [ABC 458 ↗](https://atcoder.jp/contests/abc458/submissions?f.User=avnithv) (05/16/2026) - rank 159, performance 2296, +151
 
 ### Onsites
 
@@ -40,7 +40,7 @@ I started out on Codeforces before shifting most of my focus to USACO and AtCode
 ## Problems I've Written
 
 
-Most of these live in private Codeforces groups — join the [BioCode group ↗](https://codeforces.com/group/DGuafJD2no) and the [TJIOI 2024 ↗](https://codeforces.com/contests/523552) and [TJIOI 2025 ↗](https://codeforces.com/group/nHKRGA8qo6) groups to open the problem links below. Difficulty is on a 5-star scale and the highlighted problems are my personal favorites.
+Most of these live in private Codeforces groups: join the [BioCode group ↗](https://codeforces.com/group/DGuafJD2no) and the [TJIOI 2024 ↗](https://codeforces.com/contests/523552) and [TJIOI 2025 ↗](https://codeforces.com/group/nHKRGA8qo6) groups to open the problem links below. Difficulty is on a 5-star scale and the highlighted problems are my personal favorites.
 
 | Problem | Contest | Difficulty | Author | Preparer | Notes | Link |
 | --- | --- | --- | :-: | :-: | --- | --- |
@@ -49,7 +49,7 @@ Most of these live in private Codeforces groups — join the [BioCode group ↗]
 | RNA Translation | BioCode 2023 | ★★ | ✓ | ✓ | | [link ↗](https://codeforces.com/group/DGuafJD2no/contest/432221/problem/E2) |
 | Bacteria | BioCode 2023 | ★★ | ✓ | ✓ | | [link ↗](https://codeforces.com/group/DGuafJD2no/contest/432221/problem/F) |
 | Phylogenetic Tree | BioCode 2023 | ★★★ | ✓ | ✓ | | [link ↗](https://codeforces.com/group/DGuafJD2no/contest/432221/problem/I) |
-| <mark>Bessie's Interview</mark> | USACO 2024 Open Silver | ★★★ | ✓ | ✓ | My first USACO problem — I came up with it while waiting in line. | [link ↗](https://usaco.org/index.php?page=viewproblem2&cpid=1422) |
+| <mark>Bessie's Interview</mark> | USACO 2024 Open Silver | ★★★ | ✓ | ✓ | My first USACO problem; I came up with it while waiting in line. | [link ↗](https://usaco.org/index.php?page=viewproblem2&cpid=1422) |
 | Neural Network | BioCode 2024 | ★ | ✓ | ✓ | Probably my "ideal" easy problem. | [link ↗](https://codeforces.com/gym/105123/problem/B) |
 | Flipped DNA | BioCode 2024 | ★ | ✓ | ✓ | | [link ↗](https://codeforces.com/gym/105123/problem/C) |
 | Predator or Prey | BioCode 2024 | ★★ | ✓ | ✓ | | [link ↗](https://codeforces.com/gym/105123/problem/D2) |
@@ -74,7 +74,7 @@ Most of these live in private Codeforces groups — join the [BioCode group ↗]
 | <mark>Lock Combinations</mark> | TJIOI 2025 | ★★★<span class="half">★</span> | | ✓ | Linear algebra came in handy here. | [link ↗](https://codeforces.com/group/nHKRGA8qo6/contest/610741/problem/G) |
 | Cookie XOR | TJIOI 2025 | ★<span class="half">★</span> | ✓ | ✓ | | [link ↗](https://codeforces.com/group/nHKRGA8qo6/contest/610741/problem/I) |
 | <mark>Cookie Scoring</mark> | TJIOI 2025 | ★★★★ | ✓ | ✓ | Very representative of my competitive programming style. | [link ↗](https://codeforces.com/group/nHKRGA8qo6/contest/610741/problem/J) |
-| <mark>Dynamic Instability</mark> | USACO 2026 Platinum | ★★★★ | ✓ | ✓ | Inspired by my freshman bio class — as you probably weren't able to tell from the name. | [link ↗](https://usaco.org/index.php?page=viewproblem2&cpid=1574) |
+| <mark>Dynamic Instability</mark> | USACO 2026 Platinum | ★★★★ | ✓ | ✓ | Inspired by my freshman bio class, as you probably weren't able to tell from the name. | [link ↗](https://usaco.org/index.php?page=viewproblem2&cpid=1574) |
 | <mark>Perfect Binary Trees</mark> | USACO 2026 Open Platinum | ★★★<span class="half">★</span> | ✓ | ✓ | My best problem. Funnily enough, ¾ of my USACO problems are tree-combo problems. | [link ↗](https://usaco.org/index.php?page=viewproblem2&cpid=1604) |
 | True And False | BioCode 2026 | ★ | ✓ | | | [link ↗](https://codeforces.com/group/DGuafJD2no/contest/685148/problem/A) |
 | Operator | BioCode 2026 | ★ | ✓ | | | [link ↗](https://codeforces.com/group/DGuafJD2no/contest/685148/problem/B) |
@@ -89,14 +89,14 @@ As an instructor at AlphaStar Academy, I record solution videos walking through 
 
 | Problem | Contest / Division | Link |
 | --- | --- | --- |
-| Cowlibi 2 | 2026 Contest 2 — Silver | [watch ↗](https://www.youtube.com/watch?v=db8qpnqFP0c) |
-| Declining Invitations | 2026 Contest 2 — Silver | [watch ↗](https://www.youtube.com/watch?v=8j2x9boXKJQ) |
-| Clash | 2026 Contest 3 — Silver | [watch ↗](https://www.youtube.com/watch?v=wHLjp6mVMmM) |
-| Milk Buckets | 2026 Contest 3 — Silver | [watch ↗](https://www.youtube.com/watch?v=Y5g63_ZH5aU) |
-| Point Elimination | 2026 Contest 3 — Silver | [watch ↗](https://www.youtube.com/watch?v=YjlBvcP8uK8) |
-| Good Cyclic Shifts | 2026 Contest 3 — Gold | [watch ↗](https://www.youtube.com/watch?v=tAihDgJQJ7E) |
-| Picking Flowers | 2026 Contest 3 — Gold | [watch ↗](https://www.youtube.com/watch?v=iSBVA29hDSo) |
-| Random Tree Generation | 2026 Contest 3 — Gold | [watch ↗](https://www.youtube.com/watch?v=VpbJEYrspjE) |
+| Cowlibi 2 | 2026 Contest 2 - Silver | [watch ↗](https://www.youtube.com/watch?v=db8qpnqFP0c) |
+| Declining Invitations | 2026 Contest 2 - Silver | [watch ↗](https://www.youtube.com/watch?v=8j2x9boXKJQ) |
+| Clash | 2026 Contest 3 - Silver | [watch ↗](https://www.youtube.com/watch?v=wHLjp6mVMmM) |
+| Milk Buckets | 2026 Contest 3 - Silver | [watch ↗](https://www.youtube.com/watch?v=Y5g63_ZH5aU) |
+| Point Elimination | 2026 Contest 3 - Silver | [watch ↗](https://www.youtube.com/watch?v=YjlBvcP8uK8) |
+| Good Cyclic Shifts | 2026 Contest 3 - Gold | [watch ↗](https://www.youtube.com/watch?v=tAihDgJQJ7E) |
+| Picking Flowers | 2026 Contest 3 - Gold | [watch ↗](https://www.youtube.com/watch?v=iSBVA29hDSo) |
+| Random Tree Generation | 2026 Contest 3 - Gold | [watch ↗](https://www.youtube.com/watch?v=VpbJEYrspjE) |
 
 ## Materials
 

@@ -16,7 +16,7 @@ Standard GANs were built for images and text, which makes them awkward for the t
 
 ## Results
 
-The more imbalanced a dataset was, the larger the improvement from augmentation — while majority groups saw little or no change, consistent with the idea that synthetic data helps most exactly where real data is scarce. ANOVA confirmed several of these effects were statistically significant. The work shows CTGAN augmentation is possible way to make medical ML more equitable, with the main limits being data volume and the compute that GANs demand. Presented at the school science fair with Gabriel Xu (TJHSST).
+The more imbalanced a dataset was, the larger the improvement from augmentation; majority groups saw little or no change, consistent with the idea that synthetic data helps most exactly where real data is scarce. ANOVA confirmed several of these effects were statistically significant. The work shows CTGAN augmentation is possible way to make medical ML more equitable, with the main limits being data volume and the compute that GANs demand. Presented at the school science fair with Gabriel Xu (TJHSST).
 
 ## Materials
 

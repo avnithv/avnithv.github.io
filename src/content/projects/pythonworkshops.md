@@ -18,7 +18,7 @@ These workshops were originally hosted on a Jekyll site but have been migrated h
 
 ## Contents
 
-- **Workshop 1** — intro to programming, basic datatypes & operations, control structures
-- **Workshop 2** — functions, lists & dictionaries
-- **Workshop 3** — code examples and slides
+- **Workshop 1** - intro to programming, basic datatypes & operations, control structures
+- **Workshop 2** - functions, lists & dictionaries
+- **Workshop 3** - code examples and slides
 

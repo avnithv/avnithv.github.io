@@ -17,7 +17,7 @@ const { Content } = await project.render();
 const link = project.data.link;
 const newTab = !!link && opensInNewTab(link);
 ---
-<Base title={`${project.data.title} — Avnith Vijayram`} description={project.data.summary}>
+<Base title={`${project.data.title} - Avnith Vijayram`} description={project.data.summary}>
   <p class="eyebrow">project · {project.data.year}</p>
   <h1>{project.data.title}</h1>
   <p class="lede" set:html={inlineMd(project.data.summary)} />

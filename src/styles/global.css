@@ -1,6 +1,6 @@
-/* metallic pineapple — snow-white base, emerald ink, amber/gold accents */
+/* metallic pineapple - snow-white base, emerald ink, amber/gold accents */
 :root {
-  --bg: #f8faf8;          /* snow — near-white with a green-gray hint */
+  --bg: #f8faf8;          /* snow - near-white with a green-gray hint */
   --bg-2: #edf1ee;        /* raised panel */
   --fg: #103528;          /* deep emerald ink */
   --muted: #4c6557;       /* muted emerald-gray */
@@ -38,7 +38,7 @@ body {
   padding: 0 2rem;
 }
 
-/* eyebrow / mono label system — the structural signature */
+/* eyebrow / mono label system - the structural signature */
 .eyebrow {
   font-family: var(--mono);
   font-size: 0.72rem;
@@ -151,7 +151,7 @@ main { padding: 2.5rem 0 1rem; }
 .prose thead th { border-bottom: 2px solid var(--muted); }
 .prose tbody tr:last-child td { border-bottom: none; }
 
-/* status / aside note — a deliberate amber-ruled callout, distinct from the
+/* status / aside note - a deliberate amber-ruled callout, distinct from the
    default browser blockquote that clashed with the theme */
 .prose blockquote {
   margin: 1.25rem 0;
@@ -164,7 +164,25 @@ main { padding: 2.5rem 0 1rem; }
 }
 .prose blockquote p { margin: 0; }
 
-/* half-filled star — a real ★ glyph with its right half faded, so it renders
+/* collapsible aside - <details>/<summary> in post markdown; panel styling
+   matches the blockquote callout, summary is the always-visible handle */
+.prose details {
+  margin: 1.25rem 0;
+  padding: 0.6rem 0.9rem;
+  background: var(--bg-2);
+  border: 1px solid var(--rule);
+  border-radius: 6px;
+}
+.prose summary {
+  cursor: pointer;
+  font-weight: 600;
+  color: var(--emerald);
+}
+.prose summary:hover { color: var(--accent); }
+.prose details[open] summary { margin-bottom: 0.6rem; }
+.prose details > :last-child { margin-bottom: 0; }
+
+/* half-filled star - a real ★ glyph with its right half faded, so it renders
    reliably everywhere (unlike the dedicated half-star codepoints) */
 .prose .half {
   background: linear-gradient(90deg, var(--fg) 50%, rgba(16, 53, 40, 0.25) 50%);
@@ -173,11 +191,24 @@ main { padding: 2.5rem 0 1rem; }
   color: transparent;
 }
 
-/* favorite rows — a soft gold-yellow wash over the whole row (a light tint of
+/* favorite rows - a soft gold-yellow wash over the whole row (a light tint of
    the theme's amber accent). The <mark> on the name is just the hook; :has()
    lifts the highlight up to the containing row. */
 .prose mark { background: none; color: inherit; }
 .prose tbody tr:has(mark) { background: rgba(223, 179, 46, 0.18); }
+
+/* embedded tools/figures (public/blog/<slug>/*.html) - one shared frame */
+.prose iframe {
+  width: 100%;
+  border: 1px solid var(--rule);
+  border-radius: 8px;
+  background: var(--bg);
+}
+
+/* Typst math (rehype-typst) hardcodes black glyph fills; follow the text color */
+.typst-doc [fill="#000"] { fill: currentColor; }
+.typst-doc [stroke="#000"] { stroke: currentColor; }
+svg.typst-doc { max-width: 100%; height: auto; }
 
 @media (prefers-reduced-motion: no-preference) {
   a, .row .title { transition: color 0.15s ease; }
@@ -308,7 +339,7 @@ main { padding: 2.5rem 0 1rem; }
 .post-date { color: var(--faint); font-family: var(--mono); font-size: 0.78rem; white-space: nowrap; }
 .post-desc { margin: 0; color: var(--muted); font-size: 0.94rem; line-height: 1.55; }
 /* Second (and last) line of the card: description left, link right. Cards omit
-   tag chips — those live on the post itself — so this keeps the card 2 lines.
+   tag chips - those live on the post itself - so this keeps the card 2 lines.
    baseline aligns the link to the description's first line when it wraps. */
 .post-foot {
   display: flex;
@@ -329,7 +360,7 @@ main { padding: 2.5rem 0 1rem; }
   .post-thumb { width: 100%; aspect-ratio: 16 / 9; }
 }
 
-/* featured posts (tag: "featured") — an amber ★ before the title marks
+/* featured posts (tag: "featured") - an amber ★ before the title marks
    important posts in the list. (.is-featured stays on the card as a hook in
    case a stronger treatment is wanted later.) */
 .featured-star { color: var(--accent); }

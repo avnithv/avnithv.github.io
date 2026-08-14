@@ -5,10 +5,10 @@
 title: Award Name
 org: Granting Organization        # optional
 year: "2026"
-description: "One-line summary — supports **bold**, _italics_, and [links](/path)."  # optional
+description: "One-line summary - supports **bold**, _italics_, and [links](/path)."  # optional
 # link: https://example.com      # optional. http(s):// -> external (↗, new tab); /path -> internal (→)
 #                                 # NOTE: ignored in the list if this honor has a detail page (body
-#                                 # below) — put the link in the body instead. Used only for no-page honors.
+#                                 # below) - put the link in the body instead. Used only for no-page honors.
 # linkText: view certificate     # optional label for that link (defaults to "learn more" / "more")
 ---
 

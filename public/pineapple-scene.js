@@ -1,8 +1,8 @@
-// Metallic pineapple hero — procedural faceted pineapple (orange body, dark-green
+// Metallic pineapple hero - procedural faceted pineapple (orange body, dark-green
 // crown) under a painted equirectangular environment map, surrounded by metallic
 // polygonal flecks (triangles / parallelograms) that spin individually and rotate
 // together with the pineapple. Adapted from the Claude Design handoff so that the
-// animation, placement and particle behavior are all driven by a config object —
+// animation, placement and particle behavior are all driven by a config object -
 // see DEFAULTS below and the CONFIG block in index.astro for the knobs.
 //
 // No three/examples modules required; Three is pulled from a CDN at runtime.
@@ -27,7 +27,7 @@ function loadThree() {
 
 // ---- default config (everything tweakable lives here) ------------------------
 const DEFAULTS = {
-  variant: 'A',          // 'A' | 'B' — env tint + which rim-light color
+  variant: 'A',          // 'A' | 'B' - env tint + which rim-light color
   scale: 0.5,            // overall pineapple size
   baseX: 1.8,            // horizontal offset (+ = right, − = left)
   baseY: -0.3,           // vertical offset
@@ -40,7 +40,7 @@ const DEFAULTS = {
     count: 90,           // number of flecks (or pass a name via `particles` string)
     sizeMin: 0.025,      // smallest fleck scale
     sizeRange: 0.045,    // added random size on top of sizeMin
-    driftMin: 0.6,       // upward drift speed (min) — bigger = faster
+    driftMin: 0.6,       // upward drift speed (min) - bigger = faster
     driftRange: 1.6,     // added random drift
     spin: 0.004,         // individual fleck spin speed
     radiusMin: 2.3,      // inner radius of the fleck shell
@@ -100,7 +100,7 @@ function makeEnvCanvas(variant) {
   blob(150, 300, 260, '#05060a', 0.6);
   blob(880, 320, 240, '#05060a', 0.55);
 
-  // theme tints (warm orange for A, green for B) — subtle, keeps silver dominant
+  // theme tints (warm orange for A, green for B) - subtle, keeps silver dominant
   if (variant === 'B') {
     blob(80, 220, 220, 'rgba(60,170,90,0.5)', 0.55);
     blob(940, 150, 180, 'rgba(255,140,50,0.45)', 0.5);
@@ -146,7 +146,7 @@ function buildPineapple(THREE, variant) {
   bodyMesh.position.y = -0.15;
   group.add(bodyMesh);
 
-  // dark-green core cap over the top of the body — occludes the orange that would
+  // dark-green core cap over the top of the body - occludes the orange that would
   // otherwise peek between the crown blades, reading as the dense center of the crown
   const capMat = new THREE.MeshStandardMaterial({
     color: THEME.greenDeep, metalness: 0.8, roughness: 0.4,

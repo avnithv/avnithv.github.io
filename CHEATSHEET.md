@@ -81,6 +81,54 @@ Body in Markdown — headings, lists, links, images, code blocks.
 Required: `title`, `date`. **To publish:** set `draft: false`.
 **To order / feature it:** add the slug to `src/site-order.ts`.
 
+### Writing style (site-wide)
+
+- No em-dashes anywhere on the site (content, titles, meta descriptions,
+  embedded HTML, comments in served files). Use commas, parentheses, colons,
+  semicolons, or a plain hyphen; page-title separators use `" - "`.
+- No bold (`**`) in site content; plain prose.
+- `/revise` (`.claude/skills/revise/SKILL.md`) revises a post for grammar,
+  spelling, consistency, and adds small skim-friendly section headers.
+
+### Math in posts
+
+`$...$` (inline) and `$$...$$` (display) contain **Typst math syntax** (not
+LaTeX) — e.g. `$sum_(i=1)^n i$`, `$binom(n, 2)$`. For display math (own
+line, centered) the `$$` fences must sit on **their own lines**:
+
+```markdown
+$$
+integral_0^oo e^(-x^2) dif x
+$$
+```
+
+`$$ ... $$` all on one line is treated as *inline* math (in-paragraph, not
+centered). Set up via `remark-math` + `@myriaddreamin/rehype-typst` in
+`astro.config.mjs`; equations compile to inline SVG at build time (no
+client-side JS). The SVGs hardcode black fills, so `src/styles/global.css`
+has `.typst-doc` overrides forcing `currentColor` (theme ink) and
+`max-width: 100%` for mobile. A literal dollar sign in prose should be
+escaped `\$` so it isn't parsed as a math delimiter.
+
+### Collapsible detail sections (dropdowns)
+
+Plain HTML `<details>` in the post body — no plugin. The **blank line after
+`</summary>` is required**; without it the inner content stays raw HTML
+instead of being rendered as Markdown.
+
+```markdown
+<details>
+<summary>More detail on X</summary>
+
+Any Markdown here — lists, code, math ($J_n = J_(n-1) + 2J_(n-2)$).
+
+</details>
+```
+
+Styling lives in `src/styles/global.css` (`.prose details` / `.prose
+summary`) — a bordered panel matching the blockquote callout, emerald
+summary text that turns amber on hover.
+
 ### Highlighting important posts — the `featured` tag
 
 Add `"featured"` to a post's `tags` and its card on `/blog` gets an amber ★
@@ -236,7 +284,11 @@ Put assets in `public/` and reference them with an absolute path **without
   generated one (e.g. `public/projects/sirjester/game.html`,
   `public/blog/sorting/manual-sort.html`). To embed one inside a post, use an
   inline `<iframe src="/blog/<slug>/file.html">` in the Markdown body — see
-  `src/content/blog/sorting.md`.
+  `src/content/blog/sorting.md`. The frame (full width, hairline border,
+  rounded corners, `--bg` background) comes from `.prose iframe` in
+  `src/styles/global.css`; the inline `style` only needs a `height`. Inside
+  the embedded page, mirror the site tokens from `global.css` in its own
+  `<style>` so it visually matches (e.g. `runs-graph.html`).
 
 ---
 

@@ -1,5 +1,5 @@
 ---
-title: 1st Place — UMD High School Programming Competition
+title: 1st Place - UMD High School Programming Competition
 org: University of Maryland Department of Computer Science
 year: "2025"
 description: "represented TJHSST along with 3 other students, won $1,400 for the TJ Computer Team club"

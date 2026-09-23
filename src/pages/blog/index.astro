@@ -25,8 +25,7 @@ const tagKey = (tags: string[]) => `|${tags.map((t) => t.toLowerCase()).join('|'
 const isFeatured = (tags: string[]) => tags.some((t) => t.toLowerCase() === 'featured');
 ---
 <Base title="Blog - Avnith Vijayram">
-  <p class="eyebrow">blog</p>
-  <h1>Things I've written</h1>
+  <h1>blog</h1>
   <p class="lede">mostly random stuff I've been working on or found interesting</p>
 
   {FILTER_TAGS.length > 0 && (

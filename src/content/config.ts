@@ -12,6 +12,9 @@ const blog = defineCollection({
     image: z.string().optional(),       // path to a cover image, e.g. /blog/foo.svg
     tags: z.array(z.string()).default([]),
     draft: z.boolean().default(false),
+    // Optional header extras, rendered above the rule at the top of the post:
+    links: z.array(z.object({ label: z.string(), url: z.string() })).default([]), // e.g. code, write-up
+    video: z.string().optional(),       // a YouTube URL or video id, embedded in the header
   }),
 });
 
@@ -22,6 +25,7 @@ const projects = defineCollection({
     year: z.string(),
     summary: z.string(),
     link: z.string().optional(),        // prominent link on the detail page (external site, or a file under public/projects/<slug>/)
+    redirect: z.string().optional(),    // if set, the card links straight here and /projects/<slug> forwards to it (e.g. a blog post)
     image: z.string().optional(),       // path to a cover image, e.g. /projects/foo.svg
     tags: z.array(z.string()).default([]),
   }),

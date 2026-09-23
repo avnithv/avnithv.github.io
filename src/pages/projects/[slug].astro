@@ -16,7 +16,23 @@ const { project } = Astro.props;
 const { Content } = await project.render();
 const link = project.data.link;
 const newTab = !!link && opensInNewTab(link);
+// A project with `redirect:` has no page of its own: /projects/<slug> forwards
+// there (static meta refresh, with a plain link as the fallback).
+const redirect = project.data.redirect;
 ---
+{redirect ? (
+  <html lang="en">
+    <head>
+      <meta charset="utf-8" />
+      <meta http-equiv="refresh" content={`0; url=${redirect}`} />
+      <link rel="canonical" href={redirect} />
+      <title>{project.data.title} - Avnith Vijayram</title>
+    </head>
+    <body>
+      <p>Redirecting to <a href={redirect}>{redirect}</a></p>
+    </body>
+  </html>
+) : (
 <Base title={`${project.data.title} - Avnith Vijayram`} description={project.data.summary}>
   <p class="eyebrow">project · {project.data.year}</p>
   <h1>{project.data.title}</h1>
@@ -39,3 +55,4 @@ const newTab = !!link && opensInNewTab(link);
 
   <p style="margin-top:2.5rem"><a href="/projects">← all projects</a></p>
 </Base>
+)}

@@ -8,6 +8,7 @@ summary: One-line description shown on the cards and at the top of the project p
 tags: ["tag-one", "tag-two"]   # shown as chips; also usable for grouping
 # image: /projects/your-image.svg   # optional cover image (any format) placed in public/projects/
 # link: https://example.com         # optional external link, shown as "visit project →" on the page
+# redirect: /blog/my-post          # optional; the card links straight here and /projects/<slug> forwards to it (body can be empty)
 ---
 
 Write the full project write-up here in Markdown. This body renders on the

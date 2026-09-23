@@ -9,6 +9,9 @@ description: One-line summary shown on the blog list and in page metadata.
 tags: ["tag-one", "tag-two"]    # shown as chips; the tag bar on /blog filters by these
 draft: true                     # set to false to publish (drafts are hidden from the list)
 # image: /blog/your-image.svg   # optional cover image placed in public/blog/
+# links:                        # optional; shown under the tags, above the rule
+#   - { label: code, url: https://github.com/you/repo }
+# video: https://youtu.be/XXXX    # optional YouTube URL or id, embedded above the rule
 ---
 
 Write your post here in Markdown. This body renders on the post's own page

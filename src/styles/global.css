@@ -197,6 +197,52 @@ main { padding: 2.5rem 0 1rem; }
 .prose mark { background: none; color: inherit; }
 .prose tbody tr:has(mark) { background: rgba(223, 179, 46, 0.18); }
 
+/* photos and clips in posts - plain <img>/<video>, or a <figure> with a
+   <figcaption> (used for timestamped build photos). <figure class="pair">
+   puts two images side by side (stacked on phones); <figure class="grid">
+   is a 2x2 (or 2xN) of photos cropped to 4:3, kept two-up on phones. */
+.prose img,
+.prose video {
+  display: block;
+  max-width: 100%;
+  height: auto;
+  border-radius: 8px;
+}
+.prose figure { margin: 1.5rem 0; }
+.prose figcaption {
+  margin-top: 0.45rem;
+  color: var(--muted);
+  font-family: var(--mono);
+  font-size: 0.8rem;
+  line-height: 1.5;
+}
+.prose figure.pair,
+.prose figure.grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.75rem;
+}
+.prose figure.pair figcaption,
+.prose figure.grid figcaption { grid-column: 1 / -1; margin-top: 0; }
+/* .grid crops each photo to 4:3 so a 2x2 of mixed portrait/landscape shots lines up */
+.prose figure.grid img { width: 100%; aspect-ratio: 4 / 3; object-fit: cover; }
+/* per-image captions: nest a <figure> per cell inside .pair / .grid. The cell
+   caption sits under its own image; a nested pair is cropped to 3:2 so two
+   images of different shapes stay the same height. */
+.prose figure.pair > figure,
+.prose figure.grid > figure { margin: 0; min-width: 0; }
+.prose figure.pair > figure img { width: 100%; aspect-ratio: 3 / 2; object-fit: cover; }
+.prose figure.pair > figure figcaption,
+.prose figure.grid > figure figcaption { grid-column: auto; margin-top: 0.4rem; }
+/* .pair.fit keeps each image uncropped; set the column split to match the
+   images' aspect ratios (style="--cols: 1fr 2fr") so both end up the same height */
+.prose figure.pair.fit { grid-template-columns: var(--cols, 1fr 1fr); align-items: start; }
+.prose figure.pair.fit > figure img { aspect-ratio: auto; }
+@media (max-width: 600px) {
+  .prose figure.pair,
+  .prose figure.pair.fit { grid-template-columns: 1fr; }
+}
+
 /* embedded tools/figures (public/blog/<slug>/*.html) - one shared frame */
 .prose iframe {
   width: 100%;

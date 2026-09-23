@@ -73,6 +73,9 @@ description: One-line summary shown on the list and in metadata.
 tags: ["tag-one", "tag-two"]   # shown as chips; tag bar on /blog filters by these
 draft: true               # false to publish; drafts are hidden from the list
 # image: /blog/cover.svg  # optional cover; place file in public/blog/
+# links:                  # optional; a row of links under the tags, above the rule
+#   - { label: code, url: https://github.com/you/repo }
+# video: https://youtu.be/XXXX   # optional; YouTube URL or id, embedded above the rule
 ---
 
 Body in Markdown — headings, lists, links, images, code blocks.
@@ -167,10 +170,16 @@ summary: One-line description shown on cards and at the top of the page. (REQUIR
 tags: ["tag-one", "tag-two"]
 # image: /projects/cover.svg   # optional cover; place file in public/projects/
 # link: https://example.com    # optional; shown as "visit project →"
+# redirect: /blog/my-post      # optional; card links straight there, /projects/<slug> forwards to it
 ---
 
 Full write-up in Markdown (renders at /projects/<slug>).
 ```
+
+A project that is really a blog post (or any other page) can set `redirect:`
+instead of a body: the card on `/projects` links straight to that URL, and
+`/projects/<slug>` is built as a tiny meta-refresh page that forwards there.
+See `src/content/projects/robot-jousting.md`.
 
 Required: `title`, `year`, `summary`. `link` can also point at a file under
 `public/projects/<slug>/` (e.g. a PDF).
@@ -289,6 +298,42 @@ Put assets in `public/` and reference them with an absolute path **without
   `src/styles/global.css`; the inline `style` only needs a `height`. Inside
   the embedded page, mirror the site tokens from `global.css` in its own
   `<style>` so it visually matches (e.g. `runs-graph.html`).
+
+---
+
+## Photos & clips in posts
+
+Drop files in `public/blog/<slug>/` and reference them as `/blog/<slug>/file`.
+`.prose img` / `.prose video` are capped at 100% width with rounded corners
+(`src/styles/global.css`). For a captioned photo use plain HTML in the body:
+
+```markdown
+<figure>
+<img src="/blog/<slug>/photo.jpg" alt="what it shows" loading="lazy">
+<figcaption>Sat 2:44 AM. Short caption.</figcaption>
+</figure>
+```
+
+- `<figure class="pair">` with two `<img>` puts them side by side (stacked on
+  phones); the `<figcaption>` spans both.
+- `<figure class="grid">` with four `<img>` makes a 2x2 (each photo cropped to
+  4:3 so mixed portrait/landscape shots line up); stays two-up on phones.
+- Per-image captions in a pair/grid: nest a `<figure><img><figcaption></figure>`
+  per cell instead of bare `<img>`s (a nested pair is cropped to 3:2 so the two
+  stay the same height).
+- `<figure class="pair fit" style="--cols: 1fr 2fr;">` skips the crop and splits
+  the columns by the given ratio; match it to the two images' aspect ratios so
+  they come out the same height (e.g. a 16:9 still next to a 3.5:1 strip).
+- Local video: `<video src="/blog/<slug>/clip.mp4" controls playsinline preload="metadata"></video>`
+  inside a `<figure>`. Keep clips small (720p-1080p H.264, `-crf 26`,
+  `-movflags +faststart`); iPhone HEIC/MOV originals need converting first
+  (`sips -Z 1400 -s format jpeg` for photos, `ffmpeg` for video).
+- YouTube: an `<iframe src="https://www.youtube.com/embed/<id>" style="aspect-ratio: 16 / 9; height: auto;" allowfullscreen loading="lazy">`
+  gets the shared `.prose iframe` frame; the inline `aspect-ratio` sets the height.
+- Sources for the jousting post live outside the site in `HackCMU26/` (phone
+  photos and clips) and `blog_shots/` (studio, game and sim screenshots, made
+  by `blog_shots/shoot.py`); both are untracked. Only the downscaled copies in
+  `public/blog/robot-jousting/` are part of the site.
 
 ---
 

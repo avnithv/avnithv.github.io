@@ -12,6 +12,13 @@ export async function getStaticPaths() {
 
 const { post } = Astro.props;
 const { Content } = await post.render();
+
+// Accept a bare id, youtu.be/<id>, youtube.com/watch?v=<id> or /embed/<id>.
+const youtubeId = (v: string) => {
+  const m = v.match(/(?:youtu\.be\/|v=|\/embed\/)([\w-]{6,})/);
+  return m ? m[1] : v;
+};
+const videoId = post.data.video ? youtubeId(post.data.video) : undefined;
 const fmt = (d: Date) =>
   // timeZone: UTC - see the note in src/pages/blog/index.astro.
   d.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric', timeZone: 'UTC' });
@@ -24,8 +31,28 @@ const fmt = (d: Date) =>
       {post.data.tags.map((t) => <span class="tag">{t}</span>)}
     </div>
   )}
+  {post.data.links.length > 0 && (
+    <p class="post-links">
+      {post.data.links.map((l, i) => (
+        <>
+          {i > 0 && <span class="sep"> · </span>}
+          <a href={l.url} target={l.url.startsWith('http') ? '_blank' : undefined} rel="noopener">{l.label}{l.url.startsWith('http') ? ' ↗' : ''}</a>
+        </>
+      ))}
+    </p>
+  )}
   {post.data.image && (
     <img class="post-cover" src={post.data.image} alt={`${post.data.title} cover`} />
+  )}
+  {videoId && (
+    <iframe
+      class="post-video"
+      src={`https://www.youtube.com/embed/${videoId}`}
+      title={`${post.data.title} video`}
+      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+      allowfullscreen
+      loading="lazy"
+    ></iframe>
   )}
 
   <hr />
@@ -37,6 +64,24 @@ const fmt = (d: Date) =>
 </Base>
 
 <style>
+  .post-links {
+    margin: 0.75rem 0 0;
+    font-family: var(--mono);
+    font-size: 0.85rem;
+  }
+  .post-links a { color: var(--fg); }
+  .post-links a:hover { color: var(--accent); }
+  .post-links .sep { color: var(--faint); }
+  .post-video {
+    display: block;
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    height: auto;
+    border: 1px solid var(--rule);
+    border-radius: 12px;
+    background: var(--bg);
+    margin-top: 1.5rem;
+  }
   .post-cover {
     display: block;
     width: 100%;

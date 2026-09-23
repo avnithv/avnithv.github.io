@@ -9,7 +9,7 @@ interface Props {
 }
 const { project: p } = Astro.props;
 ---
-<a class="project-card" href={`/projects/${p.slug}`}>
+<a class="project-card" href={p.data.redirect ?? `/projects/${p.slug}`}>
   {p.data.image && (
     <img class="project-thumb" src={p.data.image} alt={`${p.data.title} cover`} loading="lazy" />
   )}

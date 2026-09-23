@@ -14,8 +14,9 @@
 
 export const ordering = {
   projects: [
+    '*robot-jousting',
     '*cardiotoxicity',
-    '*gliograde',
+    'gliograde',
     '*compprog',
     'sirjester',
     'novascriptscentral',
@@ -26,15 +27,17 @@ export const ordering = {
   ],
 
   blog: [
+    '*robot-jousting',
     'sorting',
     '*ycsus',
     'first',
   ],
 
   honors: [
+    '*hackcmu',
     '*putnam',
     '*icpclatam',
-    '*regeneron',
+    'regeneron',
     'citadeldiscover',
     'conrad',
     'umdhspc',

@@ -332,7 +332,7 @@ Drop files in `public/blog/<slug>/` and reference them as `/blog/<slug>/file`.
   gets the shared `.prose iframe` frame; the inline `aspect-ratio` sets the height.
 - Sources for the jousting post live outside the site in `HackCMU26/` (phone
   photos and clips) and `blog_shots/` (studio, game and sim screenshots, made
-  by `blog_shots/shoot.py`); both are untracked. Only the downscaled copies in
+  by `blog_shots/shoot.py`); both are in `.gitignore`. Only the downscaled copies in
   `public/blog/robot-jousting/` are part of the site.
 
 ---
